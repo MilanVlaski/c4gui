@@ -1,9 +1,10 @@
-const softwareSystemBtn = document.getElementById("placeSoftwareSystem")
+let canvasState = { name: "DEFAULT"}
 const canvas = document.getElementById("canvas");
+const softwareSystemBtn = document.getElementById("placeSoftwareSystem")
 
 softwareSystemBtn.addEventListener("click", function () {
     const softwareSystem = {
-        name: "Software System 1",
+        name: "Software System",
         description: "",
     };
 
@@ -20,11 +21,9 @@ softwareSystemBtn.addEventListener("click", function () {
     this.dispatchEvent(placingEvent);
 });
 
-let canvasState = { name: "DEFAULT"}
-
 document.addEventListener("placingEvent", (e) => {
     const object = e.detail.object
-    console.log("Selected system:", object.name);
+    console.log("Selected object:", object.name);
     
     canvasState = {
         name: "PLACING",
@@ -32,11 +31,9 @@ document.addEventListener("placingEvent", (e) => {
         click: function(e, canvas) {
             const objectDiv = document.createElement('div')
             objectDiv.style.position = "absolute"
-            objectDiv.style.width = 100 + 'px'
-            objectDiv.style.height = 100 + 'px'
             objectDiv.style.left = e.clientX + 'px'
             objectDiv.style.top = e.clientY + 'px'
-            objectDiv.style.backgroundColor = "red"
+            objectDiv.classList.add('softwareSystem')
 
             const nameDiv = document.createElement('div')
             nameDiv.textContent = object.name
