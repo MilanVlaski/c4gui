@@ -23,6 +23,7 @@ softwareSystemBtn.addEventListener('click', function () {
 
             const nameDiv = document.createElement('div')
             nameDiv.textContent = softwareSystem.name
+            nameDiv.contentEditable = true
 
             objectDiv.appendChild(nameDiv)
 
