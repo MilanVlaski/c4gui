@@ -43,9 +43,6 @@ function softwareSystemElement(coords, softwareSystem) {
             name: 'CONNECTING',
             object: element,
             click: function () { },
-            pointerup: function () {
-                new LeaderLine(object, element)        
-            }
         }
 
         let dragDiv = document.createElement('div')
@@ -59,7 +56,7 @@ function softwareSystemElement(coords, softwareSystem) {
     })
 
     element.addEventListener('pointerup', e => {
-        canvasState.pointerup(e)
+        new LeaderLine(canvasState.object, element)
     })
 
     return element
