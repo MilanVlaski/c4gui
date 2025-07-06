@@ -1,4 +1,4 @@
-const DEFAULT_STATE = {name: 'DEFAULT', click: function () {} }
+const DEFAULT_STATE = { name: 'DEFAULT', click: function () { } }
 let canvasState = DEFAULT_STATE
 
 const canvas = document.getElementById('canvas')
@@ -42,12 +42,24 @@ function softwareSystemElement(coords, softwareSystem) {
         canvasState = {
             name: 'CONNECTING',
             object: element,
-            click: function() {},
+            click: function () { },
+            pointerup: function () {
+                new LeaderLine(object, element)        
+            }
         }
+
+        let dragDiv = document.createElement('div')
+        dragDiv.style.position = 'absolute'
+        dragDiv.style.left = e.clientX + 'px'
+        dragDiv.style.top = e.clientY + 'px'
+        dragDiv.style.background = 'red'
+
+        dragDiv.style.width = '100px'
+        dragDiv.style.height = '100px'
     })
 
     element.addEventListener('pointerup', e => {
-        new LeaderLine(canvasState.object, element)
+        canvasState.pointerup(e)
     })
 
     return element
