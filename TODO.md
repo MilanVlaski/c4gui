@@ -1,3 +1,6 @@
 - [ ] Connect two software systems
     - [ ] Go into connecting state on pointerdown
     - [ ] Have a leaderline between mouse pointer and the object that was clicked
+        - [ ] Create a draggable <div> on pointer down
+        - [ ] Make a line between the starting element and that div
+        - [ ] Remove the div on relase

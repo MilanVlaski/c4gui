@@ -1,15 +1,8 @@
-const DEFAULT_STATE = {name: 'DEFAULT', click: function () {} };
+const DEFAULT_STATE = {name: 'DEFAULT', click: function () {} }
 let canvasState = DEFAULT_STATE
-const canvas = document.getElementById('canvas');
+
+const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    new LeaderLine(
-    document.getElementById('1'),
-        document.getElementById('2'),
-    )
-})
 
 softwareSystemBtn.addEventListener('click', function () {
 
@@ -24,33 +17,45 @@ softwareSystemBtn.addEventListener('click', function () {
         name: 'PLACING',
         object: softwareSystem,
         click: function (e, canvas) {
-            const objectDiv = softwareSystemHtml(e, softwareSystem);
+            const objectDiv = softwareSystemElement(e, softwareSystem);
             canvas.appendChild(objectDiv);
             canvasState = DEFAULT_STATE
         },
     }
 });
 
-function softwareSystemHtml(coords, softwareSystem) {
-    let div = document.createElement('div')
-    div.style.position = 'absolute'
-    div.style.left = coords.clientX + 'px'
-    div.style.top = coords.clientY + 'px'
-    div.classList.add('softwareSystem')
+
+function softwareSystemElement(coords, softwareSystem) {
+    let element = document.createElement('div')
+    element.style.position = 'absolute'
+    element.style.left = coords.clientX + 'px'
+    element.style.top = coords.clientY + 'px'
+    element.classList.add('softwareSystem')
 
     const nameDiv = document.createElement('div')
     nameDiv.textContent = softwareSystem.name
     nameDiv.contentEditable = true
 
-    div.appendChild(nameDiv)
+    element.appendChild(nameDiv)
 
-    div.addEventListener('pointerdown', e => {
-        
+    element.addEventListener('pointerdown', e => {
+        canvasState = {
+            name: 'CONNECTING',
+            object: element,
+            click: function() {},
+        }
     })
 
-    return div
+    element.addEventListener('pointerup', e => {
+        new LeaderLine(canvasState.object, element)
+    })
+
+    return element
 }
+
 
 canvas.addEventListener('click', (e) => {
     canvasState.click(e, canvas)
 })
+
+
