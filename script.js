@@ -3,6 +3,14 @@ let canvasState = DEFAULT_STATE
 const canvas = document.getElementById('canvas');
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    new LeaderLine(
+    document.getElementById('1'),
+        document.getElementById('2'),
+    )
+})
+
 softwareSystemBtn.addEventListener('click', function () {
 
     const softwareSystem = {
@@ -35,6 +43,10 @@ function softwareSystemHtml(coords, softwareSystem) {
     nameDiv.contentEditable = true
 
     div.appendChild(nameDiv)
+
+    div.addEventListener('pointerdown', e => {
+        
+    })
 
     return div
 }
