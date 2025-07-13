@@ -80,12 +80,11 @@ function softwareSystemElement(coords, softwareSystem) {
         previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: false } })
 
         // Keep the anchor stuck to the pointer as it moves
-        pointerMoveHandler = moveEvent => {
+        document.addEventListener('pointermove', moveEvent => {
             tempAnchor.style.left = moveEvent.clientX + 'px'
             tempAnchor.style.top = moveEvent.clientY + 'px'
             previewLine.position()
-        }
-        document.addEventListener('pointermove', pointerMoveHandler)
+        })
     })
 
     element.addEventListener('pointerup', e => {
