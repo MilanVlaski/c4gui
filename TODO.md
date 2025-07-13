@@ -1,3 +1,8 @@
+### To do
+- [ ] When an element pressed is being pressed, ie being connected to another element, draw a simple dotted line from the element to the pointer
+	- [ ] Either do this with leaderline and a Draggable invisible element
+	- [ ] Or with a primitive dotted line
+	- [ ] Should be visible while in "ConnectingState"
 - [ ] Create a person
 - [ ] Connect person with software system
 - [x] Connect two software systems
