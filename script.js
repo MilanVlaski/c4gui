@@ -1,24 +1,10 @@
 const DEFAULT_STATE = { name: 'DEFAULT', click: function () { } }
 let canvasState = DEFAULT_STATE
 
-// Variables used to display a temporary "connecting" line
-let previewLine = null
-let tempAnchor = null
-let pointerMoveHandler = null
-
 function cleanupConnectingPreview() {
-    if (previewLine) {
-        previewLine.remove()
-        previewLine = null
-    }
-    if (tempAnchor) {
-        tempAnchor.remove()
-        tempAnchor = null
-    }
-    if (pointerMoveHandler) {
-        document.removeEventListener('pointermove', pointerMoveHandler)
-        pointerMoveHandler = null
-    }
+    previewLine.remove()
+    tempAnchor.remove()
+    document.removeEventListener('pointermove', pointerMoveHandler)
 }
 
 const canvas = document.getElementById('canvas')
@@ -77,7 +63,7 @@ function softwareSystemElement(coords, softwareSystem) {
         canvas.appendChild(tempAnchor)
 
         // Draw temporary dashed line from the source element to the pointer
-        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: false } })
+        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true } })
 
         // Keep the anchor stuck to the pointer as it moves
         document.addEventListener('pointermove', moveEvent => {
@@ -109,5 +95,3 @@ document.addEventListener('pointerup', () => {
         canvasState = DEFAULT_STATE
     }
 })
-
-
