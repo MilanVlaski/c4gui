@@ -1,6 +1,26 @@
 const DEFAULT_STATE = { name: 'DEFAULT', click: function () { } }
 let canvasState = DEFAULT_STATE
 
+// Variables used to display a temporary "connecting" line
+let previewLine = null
+let tempAnchor = null
+let pointerMoveHandler = null
+
+function cleanupConnectingPreview() {
+    if (previewLine) {
+        previewLine.remove()
+        previewLine = null
+    }
+    if (tempAnchor) {
+        tempAnchor.remove()
+        tempAnchor = null
+    }
+    if (pointerMoveHandler) {
+        document.removeEventListener('pointermove', pointerMoveHandler)
+        pointerMoveHandler = null
+    }
+}
+
 const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
 
@@ -39,24 +59,41 @@ function softwareSystemElement(coords, softwareSystem) {
     element.appendChild(nameDiv)
 
     element.addEventListener('pointerdown', e => {
+        // Enter CONNECTING state – remember the source element
         canvasState = {
             name: 'CONNECTING',
             object: element,
             click: function () { },
         }
 
-        let dragDiv = document.createElement('div')
-        dragDiv.style.position = 'absolute'
-        dragDiv.style.left = e.clientX + 'px'
-        dragDiv.style.top = e.clientY + 'px'
-        dragDiv.style.background = 'red'
+        // Create a tiny invisible element that will follow the pointer
+        tempAnchor = document.createElement('div')
+        tempAnchor.style.position = 'absolute'
+        tempAnchor.style.left = e.clientX + 'px'
+        tempAnchor.style.top = e.clientY + 'px'
+        tempAnchor.style.width = '1px'
+        tempAnchor.style.height = '1px'
+        tempAnchor.style.pointerEvents = 'none'
+        canvas.appendChild(tempAnchor)
 
-        dragDiv.style.width = '100px'
-        dragDiv.style.height = '100px'
+        // Draw temporary dashed line from the source element to the pointer
+        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: false } })
+
+        // Keep the anchor stuck to the pointer as it moves
+        pointerMoveHandler = moveEvent => {
+            tempAnchor.style.left = moveEvent.clientX + 'px'
+            tempAnchor.style.top = moveEvent.clientY + 'px'
+            previewLine.position()
+        }
+        document.addEventListener('pointermove', pointerMoveHandler)
     })
 
     element.addEventListener('pointerup', e => {
-        new LeaderLine(canvasState.object, element)
+        if (canvasState.name === 'CONNECTING' && canvasState.object !== element) {
+            new LeaderLine(canvasState.object, element)
+        }
+        cleanupConnectingPreview()
+        canvasState = DEFAULT_STATE
     })
 
     return element
@@ -65,6 +102,13 @@ function softwareSystemElement(coords, softwareSystem) {
 
 canvas.addEventListener('click', (e) => {
     canvasState.click(e, canvas)
+})
+
+document.addEventListener('pointerup', () => {
+    if (canvasState.name === 'CONNECTING') {
+        cleanupConnectingPreview()
+        canvasState = DEFAULT_STATE
+    }
 })
 
 
