@@ -7,12 +7,18 @@ let tempAnchor = null
 let pointerMoveHandler = null
 
 function cleanupConnectingPreview() {
-    previewLine.remove()
-    previewLine = null
-    tempAnchor.remove()
-    tempAnchor = null
+    if(previewLine) {
+        previewLine.remove()
+        previewLine = null
+    }
+    if(tempAnchor) {
+        tempAnchor.remove()
+        tempAnchor = null
+    }
     document.removeEventListener('pointermove', pointerMoveHandler)
-    pointerMoveHandler = null
+    if(pointerMoveHandler) {
+        pointerMoveHandler = null
+    }
 }
 const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
