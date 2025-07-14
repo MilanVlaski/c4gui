@@ -3,8 +3,9 @@
 	- [x] Either do this with leaderline and a Draggable invisible element
 	- [x] Or with a primitive dotted line
 	- [x] Should be visible while in "ConnectingState"
-- [ ] Create a person
+- [ ] Create a person, shaped with CSS.
+	- [ ] Add button to add a user
 - [ ] Connect person with software system
 - [x] Connect two software systems
     - [x] Go into connecting state on pointerdown
-- [ ] Have a leaderline between mouse pointer and the object that was clicked. Good for UX, but don't know how to do.
+- [x] Have a leaderline between mouse pointer and the object that was clicked. Good for UX, but don't know how to do.

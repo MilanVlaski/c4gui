@@ -22,6 +22,7 @@ softwareSystemBtn.addEventListener('click', function () {
     const softwareSystem = {
         name: 'Software System',
         description: '',
+        cssClass: ''
     };
 
     console.log(`Placing ${softwareSystem.name}`);
@@ -30,7 +31,7 @@ softwareSystemBtn.addEventListener('click', function () {
         name: 'PLACING',
         object: softwareSystem,
         click: function (e, canvas) {
-            const objectDiv = softwareSystemElement(e, softwareSystem);
+            const objectDiv = createHtmlElementFromModel(e, softwareSystem);
             canvas.appendChild(objectDiv);
             canvasState = DEFAULT_STATE
         },
@@ -38,7 +39,7 @@ softwareSystemBtn.addEventListener('click', function () {
 });
 
 
-function softwareSystemElement(coords, softwareSystem) {
+function createHtmlElementFromModel(coords, model) {
     let element = document.createElement('div')
     element.style.position = 'absolute'
     element.style.left = coords.clientX + 'px'
@@ -46,7 +47,7 @@ function softwareSystemElement(coords, softwareSystem) {
     element.classList.add('softwareSystem')
 
     const nameDiv = document.createElement('div')
-    nameDiv.textContent = softwareSystem.name
+    nameDiv.textContent = model.name
     nameDiv.contentEditable = true
 
     element.appendChild(nameDiv)
