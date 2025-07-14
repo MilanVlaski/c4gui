@@ -16,6 +16,7 @@ function cleanupConnectingPreview() {
 }
 const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
+const personBtn = document.getElementById('placePerson')
 
 softwareSystemBtn.addEventListener('click', function () {
 
@@ -32,6 +33,27 @@ softwareSystemBtn.addEventListener('click', function () {
         object: softwareSystem,
         click: function (e, canvas) {
             const objectDiv = createHtmlElementFromModel(e, softwareSystem);
+            canvas.appendChild(objectDiv);
+            canvasState = DEFAULT_STATE
+        },
+    }
+});
+
+personBtn.addEventListener('click', function () {
+
+    const person = {
+        displayName: 'Person',
+        description: '',
+        name: 'person'
+    };
+
+    console.log(`Placing ${person.displayName}`);
+
+    canvasState = {
+        name: 'PLACING',
+        object: person,
+        click: function (e, canvas) {
+            const objectDiv = createHtmlElementFromModel(e, person);
             canvas.appendChild(objectDiv);
             canvasState = DEFAULT_STATE
         },
