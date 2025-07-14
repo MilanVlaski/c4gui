@@ -5,6 +5,7 @@
 	- [x] Should be visible while in "ConnectingState"
 - [ ] Create a person, shaped with CSS.
 	- [ ] Add button to add a user
+- [ ] Stop drawing temp arrow while pointer is inside the element 
 - [ ] Connect person with software system
 - [x] Connect two software systems
     - [x] Go into connecting state on pointerdown

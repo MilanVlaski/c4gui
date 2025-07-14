@@ -7,12 +7,12 @@ let tempAnchor = null
 let pointerMoveHandler = null
 
 function cleanupConnectingPreview() {
-        previewLine.remove()
-        previewLine = null
-        tempAnchor.remove()
-        tempAnchor = null
-        document.removeEventListener('pointermove', pointerMoveHandler)
-        pointerMoveHandler = null
+    previewLine.remove()
+    previewLine = null
+    tempAnchor.remove()
+    tempAnchor = null
+    document.removeEventListener('pointermove', pointerMoveHandler)
+    pointerMoveHandler = null
 }
 const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
@@ -20,12 +20,12 @@ const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
 softwareSystemBtn.addEventListener('click', function () {
 
     const softwareSystem = {
-        name: 'Software System',
+        displayName: 'Software System',
         description: '',
-        cssClass: ''
+        name: 'softwareSystem' // Name is the css class, by default.
     };
 
-    console.log(`Placing ${softwareSystem.name}`);
+    console.log(`Placing ${softwareSystem.displayName}`);
 
     canvasState = {
         name: 'PLACING',
@@ -44,10 +44,10 @@ function createHtmlElementFromModel(coords, model) {
     element.style.position = 'absolute'
     element.style.left = coords.clientX + 'px'
     element.style.top = coords.clientY + 'px'
-    element.classList.add('softwareSystem')
+    element.classList.add(model.name)
 
     const nameDiv = document.createElement('div')
-    nameDiv.textContent = model.name
+    nameDiv.textContent = model.displayName
     nameDiv.contentEditable = true
 
     element.appendChild(nameDiv)
