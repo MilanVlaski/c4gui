@@ -2,8 +2,23 @@
 - [x] Put structurizr example on this laptop
 - [x] See what types of elements there are at the "context" level
 - [ ] Display a header signifying that this is the System Context view
-- [ ] Hover over arrow and enable adding text on top of it
+- [ ] Don't draw leaderline while pointer is down over the pointered down element.
+- [ ] Hover over relationship arrow and enable adding text on top of it
 - [ ] Draggable elements
+- [ ] Copy styling of structurizr (use a ruler to find out proportions)
+- [ ] Connecting doesn't work on mobile. Events don't propagate correctly.
+- [ ] Add elements to an in memory model
+	- [ ] Enforce name uniqueness by taking the name of the element, and adding a number.
+		- [ ] Number should be counted, probably by the "model"
+		- [ ] Each HTML element should have same id as model name 
+	- [ ] Prevent duplicates. Elements should have unique names.
+- [ ] Double click on a software system leads to a container view.
+- [ ] Tree on the left with currently existing elements
+	- [ ] Drag and drop elements. Important, to promote reuse.
+	- [ ] Delete an element.
+- [ ] Right click delete an element.
+- [ ] Editing the contentEditable name of an element should propagate to the model, and a rename should be attempted. It's best that html elements have ids that are equal to their model counterparts.
+- [ ] Cursor changes when button to add an element is clicked
 - [x] When an element pressed is being pressed, ie being connected to another element, draw a simple dotted line from the element to the pointer
 	- [x] Either do this with leaderline and a Draggable invisible element
 	- [x] Or with a primitive dotted line
