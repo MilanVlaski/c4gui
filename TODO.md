@@ -1,4 +1,9 @@
 ### To do
+- [x] Put structurizr example on this laptop
+- [x] See what types of elements there are at the "context" level
+- [ ] Display a header signifying that this is the System Context view
+- [ ] Hover over arrow and enable adding text on top of it
+- [ ] Draggable elements
 - [x] When an element pressed is being pressed, ie being connected to another element, draw a simple dotted line from the element to the pointer
 	- [x] Either do this with leaderline and a Draggable invisible element
 	- [x] Or with a primitive dotted line
@@ -6,7 +11,7 @@
 - [x] Create a person, shaped with CSS.
 	- [x]Add button to add a user
 - [ ] Stop drawing temp arrow while pointer is inside the element 
-- [ ] Connect person with software system
+- [x] Connect person with software system
 - [x] Connect two software systems
     - [x] Go into connecting state on pointerdown
 - [x] Have a leaderline between mouse pointer and the object that was clicked. Good for UX, but don't know how to do.
