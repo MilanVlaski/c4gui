@@ -70,8 +70,8 @@ personBtn.addEventListener('click', function () {
 function createHtmlElementFromModel(coords, model) {
     let element = document.createElement('div')
     element.style.position = 'absolute'
-    element.style.left = coords.clientX + 'px'
-    element.style.top = coords.clientY + 'px'
+    element.style.left = coords.pageX + 'px'
+    element.style.top = coords.pageY + 'px'
     element.classList.add(model.name)
 
     const nameDiv = document.createElement('div')
@@ -90,9 +90,9 @@ function createHtmlElementFromModel(coords, model) {
 
         // Create a tiny invisible element that will follow the pointer
         tempAnchor = document.createElement('div')
-        tempAnchor.style.position = 'absolute'
-        tempAnchor.style.left = e.clientX + 'px'
-        tempAnchor.style.top = e.clientY + 'px'
+        tempAnchor.style.position = 'fixed'
+        tempAnchor.style.left = e.pageX + 'px'
+        tempAnchor.style.top = e.pageY + 'px'
         tempAnchor.style.width = '1px'
         tempAnchor.style.height = '1px'
         tempAnchor.style.pointerEvents = 'none'
