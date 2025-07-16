@@ -100,7 +100,7 @@ function createHtmlElementFromModel(coords, model) {
         canvas.appendChild(tempAnchor)
 
         // Draw temporary dashed line from the source element to the pointer
-        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true } })
+        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true } , path: 'straight', endPlug: 'behind'})
 
         pointerMoveHandler = moveEvent => {
             tempAnchor.style.left = moveEvent.clientX + 'px'
