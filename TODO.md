@@ -1,6 +1,7 @@
 ### To do
 - [x] Put structurizr example on this laptop
 - [x] See what types of elements there are at the "context" level
+- [ ] Fix the mobile problem by having the same handler for both mouse and touch.
 - [ ] Display a header signifying that this is the System Context view
 - [ ] Don't draw leaderline while pointer is down over the pointered down element.
 - [ ] Hover over relationship arrow and enable adding text on top of it
