@@ -1,6 +1,8 @@
 ### To do
 - [x] Put structurizr example on this laptop
 - [x] See what types of elements there are at the "context" level
+- [ ] Have a fixed thing at the top which has a "Pan" button, to move the canvas around.
+- [ ] Have a button on the fixed thing that lets you move items around. (Strictly visual. Don't want to go layout intensive.) This will lead to a "arranging state" which will prevent "connecting" behavior, which occurs in the default state. 
 - [ ] Fix the mobile problem by having the same handler for both mouse and touch.
 - [x] Display a header signifying that this is the System Context view
 - [ ] Don't draw leaderline while pointer is down over the pointered down element.

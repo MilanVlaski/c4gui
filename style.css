@@ -1,7 +1,7 @@
 #canvas {
     border: 1px black solid;
     height: 100vh;
-    background-color: #f5f5f5;
+    background-color: #bbb; 
 
     
     /* Disables scrolling */
@@ -17,7 +17,7 @@
 
     width: 120px;
     height: 75px;
-    background-color: #bbb;
+    background-color: #444;
     border: 1px solid black;
     transition: border 0.1s ease;
 }
@@ -45,7 +45,7 @@
     content: '';
     width: 50px;
     height: 50px;
-    background: #bbb;
+    background-color: #444;
     border: 1px solid black;
     border-radius: 50%;
 }
@@ -54,7 +54,7 @@
     content: '';
     width: 100px;
     height: 60px;
-    background: #bbb;
+    background-color: #444;
     border: 1px solid black;
     border-radius: 8px;
     margin-top: 2px;
