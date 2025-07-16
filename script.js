@@ -7,16 +7,16 @@ let tempAnchor = null
 let pointerMoveHandler = null
 
 function cleanupConnectingPreview() {
-    if(previewLine) {
+    if (previewLine) {
         previewLine.remove()
         previewLine = null
     }
-    if(tempAnchor) {
+    if (tempAnchor) {
         tempAnchor.remove()
         tempAnchor = null
     }
     document.removeEventListener('pointermove', pointerMoveHandler)
-    if(pointerMoveHandler) {
+    if (pointerMoveHandler) {
         pointerMoveHandler = null
     }
 }
@@ -76,6 +76,7 @@ function createHtmlElementFromModel(coords, model) {
 
     const nameDiv = document.createElement('div')
     nameDiv.textContent = model.displayName
+    nameDiv.style.userSelect = 'none'
     nameDiv.contentEditable = true
 
     element.appendChild(nameDiv)
