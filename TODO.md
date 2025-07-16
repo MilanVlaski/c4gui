@@ -1,10 +1,17 @@
 ### To do
-- [ ] Hover over relationship arrow and enable adding text on top of it
+- [ ] **ContentEditable default behavior sucks. Come up with a better solution.**
+- [ ] Double click on a software system leads to a container view.
+	- [ ] Just redraw the elements, memorizing their positions for this purpose.
+	-  Double clicking a Container means the canvas is cleared, and loaded with the container contents, with the name of the Container, and appropriate buttons, etc.
+	- The page will be loaded dynamically, because that's much faster.
 - [ ] Have a fixed thing at the top which has a "Pan" button, to move the canvas around.
-- [ ] Have a button on the fixed thing that lets you move items around. (Strictly visual. Don't want to go layout intensive.) This will lead to a "arranging state" which will prevent "connecting" behavior, which occurs in the default state. 
-	- [ ] Draggable elements
-- [ ] Don't draw leaderline while pointer is down over the pointered down element.
+- [ ] Hover over relationship arrow and enable adding text on top of it
+	- Tough. Maybe try from the sidebar instead.
 - [ ] Copy styling of structurizr (use a ruler to find out proportions)
+- [ ] Centered toolbar
+	- [ ] Arranging state (Draggable etc?).
+		- [ ] Mouse becomes drag.
+	- [ ] Panning state
 #### Model
 - [ ] Add elements to an in memory model
 	- [ ] Enforce name uniqueness by taking the name of the element, and adding a number.
@@ -16,12 +23,12 @@
 	- [ ] Delete an element.
 - [ ] Right click delete an element.
 - [ ] Editing the contentEditable name of an element should propagate to the model, and a rename should be attempted. It's best that html elements have ids that are equal to their model counterparts.
-- [ ] Double click on a software system leads to a container view.
 #### GUI Improvements Graveyard
 - [ ] Cursor changes when button to add an element is clicked
 - [ ] Connecting doesn't work on mobile. Events don't propagate correctly.
 	- [ ] Fix the mobile connecting problem by having the same handler for both mouse and touch.
 #### Solved
+- [x] Don't draw leaderline while pointer is down over the pointered down element.
 - [x] Put structurizr example on this laptop
 - [x] See what types of elements there are at the "context" level
 - [x] Display a header signifying that this is the System Context view
