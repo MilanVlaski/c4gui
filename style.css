@@ -41,7 +41,7 @@ body {
 }
 
 /* Positionins the name of the person element absolutely. Might break things. */
-.person span {
+.person span, .person input {
     position: absolute;
     margin-top: 60px;
 }
