@@ -1,5 +1,5 @@
 ### To do
-- [ ] **ContentEditable default behavior sucks. Come up with a better solution.**
+- [x] **ContentEditable default behavior sucks. Come up with a better solution.**
 - [ ] Double click on a software system leads to a container view.
 	- [ ] Just redraw the elements, memorizing their positions for this purpose.
 	-  Double clicking a Container means the canvas is cleared, and loaded with the container contents, with the name of the Container, and appropriate buttons, etc.

@@ -74,12 +74,47 @@ function createHtmlElementFromModel(coords, model) {
     element.style.top = coords.pageY + 'px'
     element.classList.add(model.name)
 
-    const nameDiv = document.createElement('div')
-    nameDiv.textContent = model.displayName
-    nameDiv.style.userSelect = 'none'
-    nameDiv.contentEditable = true
+    const nameSpan = document.createElement('span')
+    nameSpan.textContent = model.displayName
+    nameSpan.style.userSelect = 'none'
 
-    element.appendChild(nameDiv)
+    element.appendChild(nameSpan)
+
+    // Enable inline editing without using contentEditable
+    function enableInlineEdit(labelEl) {
+        // Prevent drag/connection behaviour while editing
+        // labelEl.addEventListener('pointerdown', e => e.stopPropagation())
+
+        labelEl.addEventListener('click', function startEditing(e) {
+            e.stopPropagation()
+            const currentText = this.textContent
+            const input = document.createElement('input')
+            input.position = 'absolute'
+            input.value = currentText
+            input.style.minWidth = '50px'
+            this.replaceWith(input)
+            input.focus()
+
+            const finish = () => {
+                const newText = input.value.trim() || model.displayName
+                const span = document.createElement('span')
+                span.textContent = newText
+                span.style.userSelect = 'none'
+                // Re-enable inline editing on the new span
+                enableInlineEdit(span)
+                input.replaceWith(span)
+            }
+
+            input.addEventListener('blur', finish)
+            input.addEventListener('keydown', ev => {
+                if (ev.key === 'Enter' || ev.key === 'Escape') {
+                    input.blur()
+                }
+            })
+        })
+    }
+
+    enableInlineEdit(nameSpan)
 
     element.addEventListener('pointerdown', e => {
         // Enter CONNECTING state – remember the source element

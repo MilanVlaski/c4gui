@@ -1,3 +1,7 @@
+body {
+    padding: 1rem;
+}
+
 #canvas {
     border: 1px black solid;
     height: 100vh;
@@ -15,7 +19,7 @@
     align-items: center;
     position: absolute;
 
-    width: 120px;
+    width: 10em;
     height: 75px;
     background-color: #444;
     border: 1px solid black;
@@ -28,7 +32,7 @@
 
 .person {
     position: absolute;
-    width: 100px;
+    width: 10em;
     height: 110px;
     display: flex;
     flex-direction: column;
@@ -36,14 +40,15 @@
     pointer-events: auto;
 }
 
-.person div {
+/* Positionins the name of the person element absolutely. Might break things. */
+.person span {
     position: absolute;
     margin-top: 60px;
 }
 
 .person::before {
     content: '';
-    width: 50px;
+    width: 3rem;
     height: 50px;
     background-color: #444;
     border: 1px solid black;
@@ -52,7 +57,7 @@
 
 .person::after {
     content: '';
-    width: 100px;
+    width: 7rem;
     height: 60px;
     background-color: #444;
     border: 1px solid black;
@@ -63,3 +68,4 @@
 .person:hover {
   box-shadow: 0 0 3px 2px blue;
 }
+
