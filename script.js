@@ -12,11 +12,7 @@ const personBtn = document.getElementById('placePerson')
 
 softwareSystemBtn.addEventListener('click', function () {
 
-    const softwareSystem = {
-        displayName: 'Software System',
-        description: '',
-        name: 'softwareSystem', // Name is the css class, by default.
-    };
+    const softwareSystem = new DiagramElement('Software System', '', 'softwareSystem');
 
     console.log(`Placing ${softwareSystem.displayName}`);
 
@@ -25,11 +21,7 @@ softwareSystemBtn.addEventListener('click', function () {
 
 personBtn.addEventListener('click', function () {
 
-    const person = {
-        displayName: 'Person',
-        description: '',
-        name: 'person',
-    };
+    const person = new DiagramElement('Person', '', 'person');
 
     console.log(`Placing ${person.displayName}`);
 
@@ -91,6 +83,7 @@ function createHtmlElementFromModel(coords, model) {
 
             const finish = () => {
                 const newText = input.value.trim() || model.displayName
+                model.displayName = newText
                 const span = document.createElement('span')
                 span.textContent = newText
                 span.style.userSelect = 'none'
