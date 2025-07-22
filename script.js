@@ -6,6 +6,48 @@ let previewLine = null
 let tempAnchor = null
 let pointerMoveHandler = null
 
+const canvas = document.getElementById('canvas')
+const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
+const personBtn = document.getElementById('placePerson')
+
+softwareSystemBtn.addEventListener('click', function () {
+
+    const softwareSystem = {
+        displayName: 'Software System',
+        description: '',
+        name: 'softwareSystem', // Name is the css class, by default.
+    };
+
+    console.log(`Placing ${softwareSystem.displayName}`);
+
+    canvasState = placingState(softwareSystem)
+});
+
+personBtn.addEventListener('click', function () {
+
+    const person = {
+        displayName: 'Person',
+        description: '',
+        name: 'person',
+    };
+
+    console.log(`Placing ${person.displayName}`);
+
+    canvasState = placingState(person)
+});
+
+function placingState(model) {
+    return {
+        name: 'PLACING',
+        object: model,
+        click: function (e, canvas) {
+            const objectDiv = createHtmlElementFromModel(e, model)
+            canvas.appendChild(objectDiv)
+            canvasState = DEFAULT_STATE
+        },
+    }
+}
+
 function cleanupConnectingPreview() {
     if (previewLine) {
         previewLine.remove()
@@ -20,52 +62,6 @@ function cleanupConnectingPreview() {
         pointerMoveHandler = null
     }
 }
-const canvas = document.getElementById('canvas')
-const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
-const personBtn = document.getElementById('placePerson')
-
-softwareSystemBtn.addEventListener('click', function () {
-
-    const softwareSystem = {
-        displayName: 'Software System',
-        description: '',
-        name: 'softwareSystem' // Name is the css class, by default.
-    };
-
-    console.log(`Placing ${softwareSystem.displayName}`);
-
-    canvasState = {
-        name: 'PLACING',
-        object: softwareSystem,
-        click: function (e, canvas) {
-            const objectDiv = createHtmlElementFromModel(e, softwareSystem);
-            canvas.appendChild(objectDiv);
-            canvasState = DEFAULT_STATE
-        },
-    }
-});
-
-personBtn.addEventListener('click', function () {
-
-    const person = {
-        displayName: 'Person',
-        description: '',
-        name: 'person'
-    };
-
-    console.log(`Placing ${person.displayName}`);
-
-    canvasState = {
-        name: 'PLACING',
-        object: person,
-        click: function (e, canvas) {
-            const objectDiv = createHtmlElementFromModel(e, person);
-            canvas.appendChild(objectDiv);
-            canvasState = DEFAULT_STATE
-        },
-    }
-});
-
 
 function createHtmlElementFromModel(coords, model) {
     let element = document.createElement('div')

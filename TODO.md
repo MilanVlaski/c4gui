@@ -1,4 +1,6 @@
 ### To do
+#### Refactoring
+- Move elements to a class
 - [x] **ContentEditable default behavior sucks. Come up with a better solution.**
 - [ ] Double click on a software system leads to a container view.
 	- [ ] Just redraw the elements, memorizing their positions for this purpose.
