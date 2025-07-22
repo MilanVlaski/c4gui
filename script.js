@@ -78,8 +78,6 @@ function createHtmlElementFromModel(coords, model) {
 
     // Enable inline editing without using contentEditable
     function enableInlineEdit(labelEl) {
-        // Prevent drag/connection behaviour while editing
-        // labelEl.addEventListener('pointerdown', e => e.stopPropagation())
 
         labelEl.addEventListener('click', function startEditing(e) {
             e.stopPropagation()
