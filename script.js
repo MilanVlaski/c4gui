@@ -1,5 +1,6 @@
-import { DiagramElement } from "./classes.js"
+import { DiagramElement, DiagramModel } from "./classes.js"
 
+let diagramModel = new DiagramModel()
 const DEFAULT_STATE = { name: 'DEFAULT', click: function () { } }
 let canvasState = DEFAULT_STATE
 
@@ -13,14 +14,14 @@ const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
 const personBtn = document.getElementById('placePerson')
 
 softwareSystemBtn.addEventListener('click', function () {
-    const softwareSystem = new DiagramElement('Software System', '', 'softwareSystem');
-    console.log(`Placing ${softwareSystem.displayName}`);
+    const softwareSystem = new DiagramElement('Software System', '', 'softwareSystem')
+    console.log(`Placing ${softwareSystem.displayName}`)
     canvasState = placingState(softwareSystem)
 });
 
 personBtn.addEventListener('click', function () {
-    const person = new DiagramElement('Person', '', 'person');
-    console.log(`Placing ${person.displayName}`);
+    const person = new DiagramElement('Person', '', 'person')
+    console.log(`Placing ${person.displayName}`)
     canvasState = placingState(person)
 });
 
@@ -32,6 +33,7 @@ function placingState(model) {
             const objectDiv = createHtmlElementFromModel(e, model)
             canvas.appendChild(objectDiv)
             canvasState = DEFAULT_STATE
+            diagramModel.addElement(model)
         },
     }
 }

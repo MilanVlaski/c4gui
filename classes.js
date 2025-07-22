@@ -6,11 +6,27 @@
  *  name        – Identifier also used as a CSS class.
  */
 export class DiagramElement {
-    constructor(displayName, description = '', name = null) {
+    constructor(displayName, description = '', name) {
         this.displayName = displayName;
         this.description  = description;
-        // Derive a css-class-friendly name when not supplied
-        this.name = name || displayName.replace(/\s+/g, '');
-        this.name = this.name.charAt(0).toLowerCase() + this.name.slice(1);
+        this.name = name
     }
 }
+
+export class DiagramModel {
+    
+    constructor() {
+        this.elements = []
+        this.softwareSystemCount = 0
+        this.personCount = 0
+        this.containerCount = 0
+    }
+
+    addElement(element) {
+        // let count = this[`${element.name}Count`] + 1
+        // let newDisplayName = `${element.displayName} ${count}`
+        this.elements.push(element)
+    }
+
+}
+ 
