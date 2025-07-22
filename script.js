@@ -28,12 +28,13 @@ personBtn.addEventListener('click', function () {
 function placingState(model) {
     return {
         name: 'PLACING',
-        object: model,
         click: function (e, canvas) {
-            const objectDiv = createHtmlElementFromModel(e, model)
-            canvas.appendChild(objectDiv)
-            canvasState = DEFAULT_STATE
-            diagramModel.addElement(model)
+            let addedElement = diagramModel.addElement(model)
+            if(addedElement) {
+                const objectDiv = createHtmlElementFromModel(e, model)
+                canvas.appendChild(objectDiv)
+                canvasState = DEFAULT_STATE
+            }
         },
     }
 }
@@ -120,7 +121,7 @@ function createHtmlElementFromModel(coords, model) {
         canvas.appendChild(tempAnchor)
 
         // Draw temporary dashed line from the source element to the pointer
-        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true } , path: 'straight', endPlug: 'behind'})
+        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true }, path: 'straight', endPlug: 'behind' })
 
         pointerMoveHandler = moveEvent => {
             tempAnchor.style.left = moveEvent.clientX + 'px'

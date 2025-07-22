@@ -15,16 +15,16 @@
 		- [ ] Mouse becomes drag.
 	- [ ] Panning state
 #### Model
-- [ ] Add elements to an in memory model
-	- [ ] Enforce name uniqueness by taking the name of the element, and adding a number.
-		- [ ] Number should be counted, probably by the "model"
-		- [ ] Each HTML element should have same id as model name 
-	- [ ] Prevent duplicates. Elements should have unique names.
+- [x] Add elements to an in memory model
+	- [x] Enforce name uniqueness by taking the name of the element, and adding a number.
+		- [x] Number should be counted, probably by the "model"
+		- [x] Each HTML element should have same id as model name 
+	- [x] Prevent duplicates. Elements should have unique names.
+- [ ] Editing the ~~contentEditable~~ displayName of an element should propagate to the model, and a rename should be attempted. It's best that html elements have ids that are equal to their model counterparts.
 - [ ] Tree on the left with currently existing elements
 	- [ ] Drag and drop elements. Important, to promote reuse.
 	- [ ] Delete an element.
 - [ ] Right click delete an element.
-- [ ] Editing the contentEditable name of an element should propagate to the model, and a rename should be attempted. It's best that html elements have ids that are equal to their model counterparts.
 #### GUI Improvements Graveyard
 - [ ] Cursor changes when button to add an element is clicked
 - [ ] Connecting doesn't work on mobile. Events don't propagate correctly.
