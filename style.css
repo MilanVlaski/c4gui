@@ -43,7 +43,7 @@ body {
 /* Positionins the name of the person element absolutely. Might break things. */
 .person span, .person input {
     position: absolute;
-    margin-top: 4em;
+    margin-top: 4.75em;
 }
 
 .person::before {
