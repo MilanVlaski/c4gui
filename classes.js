@@ -13,6 +13,7 @@ export class DiagramElement {
     }
 }
 
+// SystemContextModel?
 export class DiagramModel {
     
     constructor() {

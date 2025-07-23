@@ -123,7 +123,7 @@ function createHtmlElementFromModel(coords, model) {
         // Enter CONNECTING state – remember the source element
         canvasState = {
             name: 'CONNECTING',
-            object: element,
+            sourceElement: element,
             click: function () { },
         }
 
@@ -151,8 +151,8 @@ function createHtmlElementFromModel(coords, model) {
     })
 
     element.addEventListener('pointerup', e => {
-        if (canvasState.name === 'CONNECTING' && canvasState.object !== element) {
-            new LeaderLine(canvasState.object, element)
+        if (canvasState.name === 'CONNECTING' && canvasState.sourceElement !== element) {
+            new LeaderLine(canvasState.sourceElement, element)
         }
         cleanupConnectingPreview()
         canvasState = DEFAULT_STATE

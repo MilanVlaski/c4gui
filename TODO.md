@@ -20,7 +20,11 @@
 		- [x] Number should be counted, probably by the "model"
 		- [x] Each HTML element should have same id as model name 
 	- [x] Prevent duplicates. Elements should have unique names.
-- [ ] Editing the ~~contentEditable~~ displayName of an element should propagate to the model, and a rename should be attempted. It's best that html elements have ids that are equal to their model counterparts.
+- [x] Editing the ~~contentEditable~~ displayName of an element should propagate to the model, and a rename should be attempted.
+- [ ] Prevent duplicate relationships
+	- [ ] First, store relationships
+	- [ ] They should belong to a systemContext, for now, because that's important for later segregation
+	- [ ] A relationship is therefore unique in a system context, the key being the two elements connected
 - [ ] Tree on the left with currently existing elements
 	- [ ] Drag and drop elements. Important, to promote reuse.
 	- [ ] Delete an element.
