@@ -89,10 +89,19 @@ function createHtmlElementFromModel(coords, model) {
                 // if unique -> set html element
                 // else -> show an error or something, and set element to original
                 // model.displayName is the old text, roll back to that
-                const newText = input.value.trim() || model.displayName
-                model.displayName = newText
+                const proposedText = input.value.trim()
+                let finalText = model.displayName
+
+                if (proposedText && proposedText !== model.displayName) {
+                    if (diagramModel.renameElement(model.displayName, proposedText)) {
+                        finalText = proposedText     // rename succeeded
+                    } else {
+                        alert(`An element named "${proposedText}" already exists.`)
+                    }
+                }
+
                 const span = document.createElement('span')
-                span.textContent = newText
+                span.textContent = finalText
                 span.style.userSelect = 'none'
                 // Re-enable inline editing on the new span
                 enableInlineEdit(span)

@@ -48,5 +48,27 @@ export class DiagramModel {
         }
     }
 
+    /**
+     * Renames an existing element ensuring the new display name is unique.
+     *
+     * @param {string} oldDisplayName - Current display name of the element.
+     * @param {string} newDisplayName - Desired new, unique display name.
+     * @returns {boolean} True if the rename succeeded, false otherwise.
+     */
+    renameElement(oldDisplayName, newDisplayName) {
+        // Reject if the desired name is already taken
+        if (this.elements.has(newDisplayName)) {
+            return false
+        }
+        const element = this.elements.get(oldDisplayName)
+        if (!element) {
+            return false
+        }
+        this.elements.delete(oldDisplayName)
+        element.displayName = newDisplayName
+        this.elements.set(newDisplayName, element)
+        return true
+    }
+
 }
  
