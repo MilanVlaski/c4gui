@@ -81,6 +81,14 @@ function createHtmlElementFromModel(coords, model) {
             input.focus()
 
             const finish = () => {
+                // input.value.trim() can either be
+                // null -> don't change model, just set the html element name back
+                // same as before (trivial case?) -> don't change model, just set the html element name back
+                // different
+                // if its different, its either unique, or not
+                // if unique -> set html element
+                // else -> show an error or something, and set element to original
+                // model.displayName is the old text, roll back to that
                 const newText = input.value.trim() || model.displayName
                 model.displayName = newText
                 const span = document.createElement('span')
