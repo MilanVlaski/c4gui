@@ -1,8 +1,5 @@
 ### To do
-#### Refactoring
-- Move elements to a class
-- [x] **ContentEditable default behavior sucks. Come up with a better solution.**
-- [ ] Double click on a software system leads to a container view.
+- [ ] Double click on a software system leads to a zoom in to container view.
 	- [ ] Just redraw the elements, memorizing their positions for this purpose.
 	-  Double clicking a Container means the canvas is cleared, and loaded with the container contents, with the name of the Container, and appropriate buttons, etc.
 	- The page will be loaded dynamically, because that's much faster.
@@ -15,6 +12,19 @@
 		- [ ] Mouse becomes drag.
 	- [ ] Panning state
 #### Model
+- [ ] Tree on the left with currently existing elements
+	- [ ] Drag and drop elements. Important, to promote reuse.
+	- [ ] Delete an element.
+- [ ] Right click delete an element.
+#### GUI Improvements Graveyard
+- [ ] On hover attributes are important, because most people draw diagrams on a PC.
+- [ ] After watching CSS tutorial, make your own styling.
+- [ ] Make relationship straight, dotted, and thin.
+- [ ] Cursor changes when button to add an element is clicked
+- [ ] Connecting doesn't work on mobile. Events don't propagate correctly.
+	- [ ] Fix the mobile connecting problem by having the same handler for both mouse and touch.
+#### Solved
+- [x] ContentEditable default behavior sucks. Come up with a better solution. Solved by doing an input.
 - [x] Add elements to an in memory model
 	- [x] Enforce name uniqueness by taking the name of the element, and adding a number.
 		- [x] Number should be counted, probably by the "model"
@@ -25,15 +35,6 @@
 	- [x] First, store relationships
 	- [x] They should belong to a systemContext, for now, because that's important for later segregation
 	- [x] A relationship is therefore unique in a system context, the key being the two elements connected
-- [ ] Tree on the left with currently existing elements
-	- [ ] Drag and drop elements. Important, to promote reuse.
-	- [ ] Delete an element.
-- [ ] Right click delete an element.
-#### GUI Improvements Graveyard
-- [ ] Cursor changes when button to add an element is clicked
-- [ ] Connecting doesn't work on mobile. Events don't propagate correctly.
-	- [ ] Fix the mobile connecting problem by having the same handler for both mouse and touch.
-#### Solved
 - [x] Don't draw leaderline while pointer is down over the pointered down element.
 - [x] Put structurizr example on this laptop
 - [x] See what types of elements there are at the "context" level
