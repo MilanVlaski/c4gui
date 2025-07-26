@@ -1,4 +1,4 @@
-import { DiagramElement, DiagramModel } from "./classes.js"
+import { DiagramElement, DiagramModel } from "./Model.js"
 
 let diagramModel = new DiagramModel()
 const DEFAULT_STATE = { name: 'DEFAULT', click: function () { } }
