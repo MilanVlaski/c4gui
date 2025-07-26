@@ -8,44 +8,72 @@
 export class DiagramElement {
     constructor(displayName, description = '', name) {
         this.displayName = displayName;
-        this.description  = description;
+        this.description = description;
         this.name = name
+    }
+}
+
+export class Relationship {
+    constructor(id, sourceElement, targetElement) {
+        this.id = id
+        this.sourceElement = sourceElement
+        this.targetElement = targetElement
+        this.description = ''
     }
 }
 
 // SystemContextModel?
 export class DiagramModel {
-    
+
     constructor() {
+        // Map of all elements is convenient, for keeping names unique
         this.elements = new Map()
+        this.relationships = new Map()
+        // Maintaining the count manually is convenient for now, but may be cumbersome later.
         this.softwareSystemCount = 0
         this.personCount = 0
         this.containerCount = 0
+        this.relationshipCount = 0
     }
 
-    
-/**
- * Adds an element ensuring unique display names.
- * 
- * Note: The method mutates the element’s displayName and returns the updated element.
- * For safety, always use the returned element rather than the original reference,
- * as it may be modified or replaced internally.
- * 
- * @param {DiagramElement} element - The element to add.
- * @returns {DiagramElement|undefined} The updated element if added; otherwise undefined.
- */
+
+    /**
+     * Adds an element ensuring unique display names.
+     * 
+     * Note: The method mutates the element’s displayName and returns the updated element.
+     * For safety, always use the returned element rather than the original reference,
+     * as it may be modified or replaced internally.
+     * 
+     * @param {DiagramElement} element - The element to add.
+     * @returns {DiagramElement|undefined} The updated element if added; otherwise undefined.
+     */
     addElement(element) {
         let updatedCount = this[`${element.name}Count`] + 1
         let newDisplayName = `${element.displayName} ${updatedCount}`
 
-        if(!this.elements.has(element.displayName)) {
+        if (!this.elements.has(element.displayName)) {
             element.displayName = newDisplayName
             this.elements.set(newDisplayName, element)
             this[`${element.name}Count`] = updatedCount
 
             return element
         } else {
-            console.log("DUPLICATE ERROR")
+            console.log("DUPLICATE ELEMENT ERROR")
+        }
+    }
+
+    addRelationshipBetween(sourceElementId, targetElementId) {
+        const sourceElement = this.elements.get(sourceElementId)
+        const targetElement = this.elements.get(targetElementId)
+
+        const relationshipId = `${sourceElementId}:${targetElementId}`
+        if(!this.relationships.has(relationshipId)) {
+            this.relationshipCount++
+            const newRelationship = new Relationship(relationshipId, sourceElement, targetElement)
+
+            return this.relationships.set(relationshipId, newRelationship)
+        } else {
+            console.log("DUPLICATE RELATIONSHIP ERROR")
         }
     }
 
@@ -72,4 +100,4 @@ export class DiagramModel {
     }
 
 }
- 
+
