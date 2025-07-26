@@ -56,6 +56,7 @@ function cleanupConnectingPreview() {
 
 function createHtmlElementFromModel(coords, model) {
     let element = document.createElement('div')
+    element.id = model.displayName
     element.style.position = 'absolute'
     element.style.left = coords.pageX + 'px'
     element.style.top = coords.pageY + 'px'
@@ -144,7 +145,9 @@ function createHtmlElementFromModel(coords, model) {
 
     element.addEventListener('pointerup', e => {
         if (canvasState.name === 'CONNECTING' && canvasState.sourceElement !== element) {
-            new LeaderLine(canvasState.sourceElement, element)
+            if(diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
+                new LeaderLine(canvasState.sourceElement, element)
+            }
         }
         cleanupConnectingPreview()
         canvasState = DEFAULT_STATE

@@ -62,6 +62,18 @@ export class DiagramModel {
         }
     }
 
+    /**
+     * Adds a new relationship between two existing elements.
+     *
+     * The relationship id is composed as
+     * `${sourceElementId}:${targetElementId}` and must be unique.
+     * If a relationship with that id already exists the call logs a duplicate
+     * error and returns `undefined`.
+     *
+     * @param {string} sourceElementId - Identifier of the source element.
+     * @param {string} targetElementId - Identifier of the target element.
+     * @returns {Map|undefined} The `relationships` map after insertion, or `undefined` on failure.
+     */
     addRelationshipBetween(sourceElementId, targetElementId) {
         const sourceElement = this.elements.get(sourceElementId)
         const targetElement = this.elements.get(targetElementId)
