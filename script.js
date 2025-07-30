@@ -15,7 +15,7 @@ const DIAGRAM_ELEMENT_CLASS = 'diagram-element'
  */
 function clearToolbarButtons() {
     while (toolbar.firstChild) {
-        toolbar.firstChild.remove();
+        toolbar.firstChild.remove()
     }
 }
 
@@ -26,11 +26,11 @@ function clearToolbarButtons() {
  * @param {()=>void} onClick Click handler
  */
 function addToolbarButton(id, label, onClick) {
-    const btn = document.createElement('button');
-    btn.id = id;
-    btn.textContent = label;
-    btn.addEventListener('click', onClick);
-    toolbar.appendChild(btn);
+    const btn = document.createElement('button')
+    btn.id = id
+    btn.textContent = label
+    btn.addEventListener('click', onClick)
+    toolbar.appendChild(btn)
 }
 
 /**
@@ -40,17 +40,18 @@ function addToolbarButton(id, label, onClick) {
 function setupContainerViewToolbar() {
     clearToolbarButtons();
 
+    // These could be classes or helper functions
     addToolbarButton('placeContainer', 'Container', () => {
         startPlacingDiagramElement(new DiagramElement('Container', '', 'container'))
-    });
+    })
 
     addToolbarButton('placeSoftwareSystem', 'Software System', () => {
         startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
-    });
+    })
 
     addToolbarButton('placePerson', 'Person', () => {
         startPlacingDiagramElement(new DiagramElement('Person', '', 'person'))
-    });
+    })
 }
 
 function startPlacingDiagramElement(diagramElement) {
@@ -70,11 +71,11 @@ const toolbar = document.getElementById('toolbar')
 
 softwareSystemBtn.addEventListener('click', function () {
     startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
-});
+})
 
 personBtn.addEventListener('click', function () {
     startPlacingDiagramElement(new DiagramElement('Person', '', 'person'))
-});
+})
 
 function placingState(model) {
     return {
@@ -142,9 +143,9 @@ function addDoublePressListener(target, handler, threshold = 300) {
         if (evt.pointerType === 'touch') {
             const now = performance.now();
             if (now - lastPointerDown < threshold) {
-                handler(evt);
+                handler(evt)
             }
-            lastPointerDown = now;
+            lastPointerDown = now
         }
     });
 }
@@ -163,7 +164,74 @@ function createHtmlElementFromModel(coords, model) {
 
     element.appendChild(nameSpan)
 
-    // Enable inline editing without using contentEditable
+    // extract to function
+
+    enableInlineEdit(nameSpan)
+
+    const finishConnecting = (e) => {
+        if (canvasState.sourceElement !== element && diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
+            new LeaderLine(canvasState.sourceElement, element)
+        }
+        cleanupConnectingPreview()
+        canvasState = DEFAULT_STATE
+    }
+
+    // extract to function
+    element.addEventListener('pointerdown', e => {
+        // Enter CONNECTING state – remember the source element
+
+        canvasState = {
+            name: 'CONNECTING',
+            sourceElement: element,
+            click: function () { },
+            pointerup: finishConnecting,
+        }
+
+        // Create a tiny invisible element that will follow the pointer
+        tempAnchor = document.createElement('div')
+        tempAnchor.style.position = 'fixed'
+        tempAnchor.style.left = e.pageX + 'px'
+        tempAnchor.style.top = e.pageY + 'px'
+        tempAnchor.style.width = '1px'
+        tempAnchor.style.height = '1px'
+        tempAnchor.style.pointerEvents = 'none'
+        canvas.appendChild(tempAnchor)
+
+        // Draw temporary dashed line from the source element to the pointer
+        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true }, path: 'straight', endPlug: 'behind' })
+
+        pointerMoveHandler = moveEvent => {
+            tempAnchor.style.left = moveEvent.clientX + 'px'
+            tempAnchor.style.top = moveEvent.clientY + 'px'
+            previewLine.position()
+        }
+
+        // Keep the anchor stuck to the pointer as it moves
+        document.addEventListener('pointermove', pointerMoveHandler)
+    })
+
+    element.addEventListener('pointerup', finishConnecting)
+
+    // Double-click / Double-tap handler
+    addDoublePressListener(element, (ev) => {
+        if (model.name === 'softwareSystem') {
+            clearCanvas()
+            setupContainerViewToolbar()
+        }
+    })
+
+    return element
+}
+
+
+canvas.addEventListener('click', (e) => {
+    canvasState.click(e, canvas)
+})
+
+document.addEventListener('pointerup', () => {
+    canvasState.pointerup()
+})
+
     function enableInlineEdit(labelEl) {
 
         labelEl.addEventListener('click', function startEditing(e) {
@@ -204,68 +272,3 @@ function createHtmlElementFromModel(coords, model) {
             })
         })
     }
-
-    enableInlineEdit(nameSpan)
-
-    const finishConnecting = (e) => {
-        if (canvasState.sourceElement !== element && diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
-            new LeaderLine(canvasState.sourceElement, element)
-        }
-        cleanupConnectingPreview()
-        canvasState = DEFAULT_STATE
-    }
-
-    element.addEventListener('pointerdown', e => {
-        // Enter CONNECTING state – remember the source element
-
-        canvasState = {
-            name: 'CONNECTING',
-            sourceElement: element,
-            click: function () { },
-            pointerup: finishConnecting,
-        }
-
-        // Create a tiny invisible element that will follow the pointer
-        tempAnchor = document.createElement('div')
-        tempAnchor.style.position = 'fixed'
-        tempAnchor.style.left = e.pageX + 'px'
-        tempAnchor.style.top = e.pageY + 'px'
-        tempAnchor.style.width = '1px'
-        tempAnchor.style.height = '1px'
-        tempAnchor.style.pointerEvents = 'none'
-        canvas.appendChild(tempAnchor)
-
-        // Draw temporary dashed line from the source element to the pointer
-        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true }, path: 'straight', endPlug: 'behind' })
-
-        pointerMoveHandler = moveEvent => {
-            tempAnchor.style.left = moveEvent.clientX + 'px'
-            tempAnchor.style.top = moveEvent.clientY + 'px'
-            previewLine.position()
-        }
-
-        // Keep the anchor stuck to the pointer as it moves
-        document.addEventListener('pointermove', pointerMoveHandler)
-    })
-
-    element.addEventListener('pointerup', finishConnecting)
-
-    // Double-click / Double-tap handler
-    addDoublePressListener(element, (ev) => {
-        if (model.name === 'softwareSystem') {
-            clearCanvas();
-            setupContainerViewToolbar();
-        }
-    });
-
-    return element
-}
-
-
-canvas.addEventListener('click', (e) => {
-    canvasState.click(e, canvas)
-})
-
-document.addEventListener('pointerup', () => {
-    canvasState.pointerup()
-})
