@@ -18,22 +18,21 @@ body {
     justify-content: center;
     align-items: center;
     position: absolute;
-
-    width: 10em;
-    height: 6em;
+    
+    width: 10rem;
+    height: 6rem;
     background-color: #444;
     border: 1px solid black;
-    transition: border 0.1s ease;
 }
 
 .softwareSystem:hover {
-  box-shadow: 0 0 3px 2px blue;
+    box-shadow: 0 0 3px 2px blue;
 }
 
 .person {
     position: absolute;
-    width: 8em;
-    height: 8em;
+    width: 8rem;
+    height: 8rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,7 +42,7 @@ body {
 /* Positionins the name of the person element absolutely. Might break things. */
 .person span, .person input {
     position: absolute;
-    margin-top: 4.75em;
+    margin-top: 4.7rem;
 }
 
 .person::before {
