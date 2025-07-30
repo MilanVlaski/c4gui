@@ -13,7 +13,7 @@ body {
     overscroll-behavior: contain;
 }
 
-.softwareSystem {
+.softwareSystem, .container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +21,7 @@ body {
     
     width: 10rem;
     height: 6rem;
-    background-color: #444;
+    background-color: #999;
     border: 1px solid black;
 }
 
@@ -49,7 +49,7 @@ body {
     content: '';
     width: 4rem;
     height: 3.75rem;
-    background-color: #444;
+    background-color: #999;
     border: 1px solid black;
     border-radius: 50%;
 }
@@ -58,7 +58,7 @@ body {
     content: '';
     width: 8rem;
     height: 4.25rem;
-    background-color: #444;
+    background-color: #999;
     border: 1px solid black;
     border-radius: 8px;
     margin-top: 2px;
