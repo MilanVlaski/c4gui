@@ -1,7 +1,7 @@
 import { DiagramElement, DiagramModel } from "./Model.js"
 
 let diagramModel = new DiagramModel()
-const DEFAULT_STATE = { name: 'DEFAULT', click: function () { } }
+const DEFAULT_STATE = { name: 'DEFAULT', click: () => {}, pointerup: () => {}}
 let canvasState = DEFAULT_STATE
 
 // CSS class applied to every diagram element so we can remove them
@@ -66,7 +66,7 @@ let pointerMoveHandler = null
 const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
 const personBtn = document.getElementById('placePerson')
-const toolbar   = document.getElementById('toolbar')
+const toolbar = document.getElementById('toolbar')
 
 softwareSystemBtn.addEventListener('click', function () {
     startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
@@ -81,12 +81,13 @@ function placingState(model) {
         name: 'PLACING',
         click: function (e, canvas) {
             let addedElement = diagramModel.addElement(model)
-            if(addedElement) {
+            if (addedElement) {
                 const objectDiv = createHtmlElementFromModel(e, model)
                 canvas.appendChild(objectDiv)
                 canvasState = DEFAULT_STATE
             }
         },
+        pointerup: () => {},
     }
 }
 
@@ -206,12 +207,22 @@ function createHtmlElementFromModel(coords, model) {
 
     enableInlineEdit(nameSpan)
 
+    const finishConnecting = (e) => {
+        if (canvasState.sourceElement !== element && diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
+            new LeaderLine(canvasState.sourceElement, element)
+        }
+        cleanupConnectingPreview()
+        canvasState = DEFAULT_STATE
+    }
+
     element.addEventListener('pointerdown', e => {
         // Enter CONNECTING state – remember the source element
+
         canvasState = {
             name: 'CONNECTING',
             sourceElement: element,
             click: function () { },
+            pointerup: finishConnecting,
         }
 
         // Create a tiny invisible element that will follow the pointer
@@ -237,15 +248,7 @@ function createHtmlElementFromModel(coords, model) {
         document.addEventListener('pointermove', pointerMoveHandler)
     })
 
-    element.addEventListener('pointerup', e => {
-        if (canvasState.name === 'CONNECTING' && canvasState.sourceElement !== element) {
-            if(diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
-                new LeaderLine(canvasState.sourceElement, element)
-            }
-        }
-        cleanupConnectingPreview()
-        canvasState = DEFAULT_STATE
-    })
+    element.addEventListener('pointerup', finishConnecting)
 
     // Double-click / Double-tap handler
     addDoublePressListener(element, (ev) => {
@@ -264,8 +267,5 @@ canvas.addEventListener('click', (e) => {
 })
 
 document.addEventListener('pointerup', () => {
-    if (canvasState.name === 'CONNECTING') {
-        cleanupConnectingPreview()
-        canvasState = DEFAULT_STATE
-    }
+    canvasState.pointerup()
 })

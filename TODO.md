@@ -1,4 +1,5 @@
 ### To do
+- [ ] Refactor functions.
 - [ ] On single click, instead of displaying the input, display a form on top of the diagram element.
 	- Form should have an OK and cancel
 	- Form should go away once we click away, like the input does. Can be done with blur event?
