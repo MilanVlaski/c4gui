@@ -1,12 +1,24 @@
 ### To do
+- [ ] On single click, instead of displaying the input, display a form on top of the diagram element.
+	- Form should have an OK and cancel
+	- Form should go away once we click away, like the input does. Can be done with blur event?
+	- Optional. Form should go to the left or right if there is space.
 - [ ] Double click on a software system leads to a zoom in to container view.
+	- Given I have placed a software system in the system context view
+	- When I double click on the software system
+	- [x] Then the canvas will be cleared
+	- [ ] And the buttons will be replaced with a Container button, Software System button and Person button
+	- [ ] And the heading will display the display name of the software system
+	- [ ] When I click the back arrow on the top left of the canvas
+	- [ ] The canvas will have the element at the position it was left at
+	- [ ]
+- [ ] Add database button to container view
 	- [ ] Just redraw the elements, memorizing their positions for this purpose.
 	-  Double clicking a Container means the canvas is cleared, and loaded with the container contents, with the name of the Container, and appropriate buttons, etc.
 	- The page will be loaded dynamically, because that's much faster.
 - [ ] Have a fixed thing at the top which has a "Pan" button, to move the canvas around.
 - [ ] Hover over relationship arrow and enable adding text on top of it
 	- Tough. Maybe try from the sidebar instead.
-- [ ] Copy styling of structurizr (use a ruler to find out proportions)
 - [ ] Centered toolbar
 	- [ ] Arranging state (Draggable etc?).
 		- [ ] Mouse becomes drag.
@@ -17,6 +29,7 @@
 	- [ ] Delete an element.
 - [ ] Right click delete an element.
 #### GUI Improvements Graveyard
+- [ ] Copy styling of structurizr (use a ruler to find out proportions)
 - [ ] On hover attributes are important, because most people draw diagrams on a PC.
 - [ ] After watching CSS tutorial, make your own styling.
 - [ ] Make relationship straight, dotted, and thin.

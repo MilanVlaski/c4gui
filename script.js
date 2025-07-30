@@ -203,7 +203,7 @@ function createHtmlElementFromModel(coords, model) {
     // Double-click / Double-tap handler
     addDoublePressListener(element, (ev) => {
         if (model.name === 'softwareSystem') {
-            clearCanvas();
+            clearCanvas()
         }
     });
 
