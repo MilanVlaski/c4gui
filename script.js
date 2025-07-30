@@ -54,8 +54,8 @@ function setupContainerViewToolbar() {
 }
 
 function startPlacingDiagramElement(diagramElement) {
-    console.log(`Placing ${person.displayName}`);
-    canvasState = placingState(person);
+    console.log(`Placing ${diagramElement.displayName}`)
+    canvasState = placingState(diagramElement)
 }
 
 // Variables used to display a temporary "connecting" line
