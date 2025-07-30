@@ -8,6 +8,57 @@ let canvasState = DEFAULT_STATE
 // without touching other canvas children (e.g., UI overlays).
 const DIAGRAM_ELEMENT_CLASS = 'diagram-element'
 
+/* ---------- Toolbar management helpers ---------- */
+
+/**
+ * Remove every button from the sidebar toolbar.
+ */
+function clearToolbarButtons() {
+    while (toolbar.firstChild) {
+        toolbar.firstChild.remove();
+    }
+}
+
+/**
+ * Convenience to add a button to the toolbar.
+ * @param {string} id    DOM id for the new button
+ * @param {string} label Text shown on the button
+ * @param {()=>void} onClick Click handler
+ */
+function addToolbarButton(id, label, onClick) {
+    const btn = document.createElement('button');
+    btn.id = id;
+    btn.textContent = label;
+    btn.addEventListener('click', onClick);
+    toolbar.appendChild(btn);
+}
+
+/**
+ * Toolbar composition for the *container view* entered after zooming
+ * into a Software System.
+ */
+function setupContainerViewToolbar() {
+    clearToolbarButtons();
+
+    addToolbarButton('placeContainer', 'Container', () => {
+        const container = new DiagramElement('Container', '', 'container');
+        console.log(`Placing ${container.displayName}`);
+        canvasState = placingState(container);
+    });
+
+    addToolbarButton('placeSoftwareSystem', 'Software System', () => {
+        const softwareSystem = new DiagramElement('Software System', '', 'softwareSystem');
+        console.log(`Placing ${softwareSystem.displayName}`);
+        canvasState = placingState(softwareSystem);
+    });
+
+    addToolbarButton('placePerson', 'Person', () => {
+        const person = new DiagramElement('Person', '', 'person');
+        console.log(`Placing ${person.displayName}`);
+        canvasState = placingState(person);
+    });
+}
+
 // Variables used to display a temporary "connecting" line
 let previewLine = null
 let tempAnchor = null
@@ -16,6 +67,7 @@ let pointerMoveHandler = null
 const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
 const personBtn = document.getElementById('placePerson')
+const toolbar   = document.getElementById('toolbar')
 
 softwareSystemBtn.addEventListener('click', function () {
     const softwareSystem = new DiagramElement('Software System', '', 'softwareSystem')
@@ -203,7 +255,8 @@ function createHtmlElementFromModel(coords, model) {
     // Double-click / Double-tap handler
     addDoublePressListener(element, (ev) => {
         if (model.name === 'softwareSystem') {
-            clearCanvas()
+            clearCanvas();
+            setupContainerViewToolbar();
         }
     });
 
