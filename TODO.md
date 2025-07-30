@@ -7,7 +7,7 @@
 	- Given I have placed a software system in the system context view
 	- When I double click on the software system
 	- [x] Then the canvas will be cleared
-	- [ ] And the buttons will be replaced with a Container button, Software System button and Person button
+	- [x] And the buttons will be replaced with a Container button, Software System button and Person button
 	- [ ] And the heading will display the display name of the software system
 	- [ ] When I click the back arrow on the top left of the canvas
 	- [ ] The canvas will have the element at the position it was left at

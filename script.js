@@ -41,22 +41,21 @@ function setupContainerViewToolbar() {
     clearToolbarButtons();
 
     addToolbarButton('placeContainer', 'Container', () => {
-        const container = new DiagramElement('Container', '', 'container');
-        console.log(`Placing ${container.displayName}`);
-        canvasState = placingState(container);
+        startPlacingDiagramElement(new DiagramElement('Container', '', 'container'))
     });
 
     addToolbarButton('placeSoftwareSystem', 'Software System', () => {
-        const softwareSystem = new DiagramElement('Software System', '', 'softwareSystem');
-        console.log(`Placing ${softwareSystem.displayName}`);
-        canvasState = placingState(softwareSystem);
+        startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
     });
 
     addToolbarButton('placePerson', 'Person', () => {
-        const person = new DiagramElement('Person', '', 'person');
-        console.log(`Placing ${person.displayName}`);
-        canvasState = placingState(person);
+        startPlacingDiagramElement(new DiagramElement('Person', '', 'person'))
     });
+}
+
+function startPlacingDiagramElement(diagramElement) {
+    console.log(`Placing ${person.displayName}`);
+    canvasState = placingState(person);
 }
 
 // Variables used to display a temporary "connecting" line
@@ -70,15 +69,11 @@ const personBtn = document.getElementById('placePerson')
 const toolbar   = document.getElementById('toolbar')
 
 softwareSystemBtn.addEventListener('click', function () {
-    const softwareSystem = new DiagramElement('Software System', '', 'softwareSystem')
-    console.log(`Placing ${softwareSystem.displayName}`)
-    canvasState = placingState(softwareSystem)
+    startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
 });
 
 personBtn.addEventListener('click', function () {
-    const person = new DiagramElement('Person', '', 'person')
-    console.log(`Placing ${person.displayName}`)
-    canvasState = placingState(person)
+    startPlacingDiagramElement(new DiagramElement('Person', '', 'person'))
 });
 
 function placingState(model) {
