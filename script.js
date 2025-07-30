@@ -4,6 +4,10 @@ let diagramModel = new DiagramModel()
 const DEFAULT_STATE = { name: 'DEFAULT', click: function () { } }
 let canvasState = DEFAULT_STATE
 
+// CSS class applied to every diagram element so we can remove them
+// without touching other canvas children (e.g., UI overlays).
+const DIAGRAM_ELEMENT_CLASS = 'diagram-element'
+
 // Variables used to display a temporary "connecting" line
 let previewLine = null
 let tempAnchor = null
@@ -60,10 +64,10 @@ function cleanupConnectingPreview() {
  * can be repopulated with containers.
  */
 function clearCanvas() {
-    // Drop all element DOM nodes
-    while (canvas.firstChild) {
-        canvas.firstChild.remove();
-    }
+    // Remove only the diagram elements, leave any other overlay/ui nodes
+    canvas
+        .querySelectorAll(`.${DIAGRAM_ELEMENT_CLASS}`)
+        .forEach(el => el.remove());
     // Remove any LeaderLine SVGs that were injected into the document
     document.querySelectorAll('.leader-line').forEach(el => el.remove());
     // Clear any in-progress connection preview
@@ -103,7 +107,7 @@ function createHtmlElementFromModel(coords, model) {
     element.style.position = 'absolute'
     element.style.left = coords.pageX + 'px'
     element.style.top = coords.pageY + 'px'
-    element.classList.add(model.name)
+    element.classList.add(model.name, DIAGRAM_ELEMENT_CLASS)
 
     const nameSpan = document.createElement('span')
     nameSpan.textContent = model.displayName
