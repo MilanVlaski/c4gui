@@ -55,6 +55,23 @@ function cleanupConnectingPreview() {
 }
 
 /**
+ * Remove everything currently drawn on the canvas.  Used when the user
+ * zooms into a Software System (double-click/double-tap) so the view
+ * can be repopulated with containers.
+ */
+function clearCanvas() {
+    // Drop all element DOM nodes
+    while (canvas.firstChild) {
+        canvas.firstChild.remove();
+    }
+    // Remove any LeaderLine SVGs that were injected into the document
+    document.querySelectorAll('.leader-line').forEach(el => el.remove());
+    // Clear any in-progress connection preview
+    cleanupConnectingPreview();
+    canvasState = DEFAULT_STATE;
+}
+
+/**
  * Adds a handler that fires on either a mouse double-click or a quick
  * successive touch (double-tap).  For mouse/pen we rely on the native
  * `dblclick` event; for touch we detect two taps that occur within the
@@ -179,10 +196,11 @@ function createHtmlElementFromModel(coords, model) {
         canvasState = DEFAULT_STATE
     })
 
-    // Double-click / Double-tap stub
+    // Double-click / Double-tap handler
     addDoublePressListener(element, (ev) => {
-        console.log(`Double press detected on "${model.displayName}"`, ev);
-        // TODO: implement actual behaviour
+        if (model.name === 'softwareSystem') {
+            clearCanvas();
+        }
     });
 
     return element
