@@ -54,6 +54,32 @@ function cleanupConnectingPreview() {
     }
 }
 
+/**
+ * Adds a handler that fires on either a mouse double-click or a quick
+ * successive touch (double-tap).  For mouse/pen we rely on the native
+ * `dblclick` event; for touch we detect two taps that occur within the
+ * given time threshold.
+ *
+ * @param {HTMLElement} target  Element to attach the listener to
+ * @param {(e:Event)=>void} handler Callback invoked on double press
+ * @param {number} [threshold=300] Max gap in ms between two taps
+ */
+function addDoublePressListener(target, handler, threshold = 300) {
+    let lastPointerDown = 0;
+    // Mouse / pen double-click
+    target.addEventListener('dblclick', handler);
+    // Touch double-tap
+    target.addEventListener('pointerdown', (evt) => {
+        if (evt.pointerType === 'touch') {
+            const now = performance.now();
+            if (now - lastPointerDown < threshold) {
+                handler(evt);
+            }
+            lastPointerDown = now;
+        }
+    });
+}
+
 function createHtmlElementFromModel(coords, model) {
     let element = document.createElement('div')
     element.id = model.displayName
@@ -152,6 +178,12 @@ function createHtmlElementFromModel(coords, model) {
         cleanupConnectingPreview()
         canvasState = DEFAULT_STATE
     })
+
+    // Double-click / Double-tap stub
+    addDoublePressListener(element, (ev) => {
+        console.log(`Double press detected on "${model.displayName}"`, ev);
+        // TODO: implement actual behaviour
+    });
 
     return element
 }
