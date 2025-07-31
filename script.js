@@ -148,12 +148,13 @@ function addDoublePressListener(target, handler, threshold = 300) {
     });
 }
 
-function createHtmlElementFromModel(coords, model) {
+function createHtmlElementFromModel(clickEvent, model) {
+    console.log(clickEvent)
     let element = document.createElement('div')
     element.id = model.displayName
     element.style.position = 'absolute'
-    element.style.left = coords.pageX + 'px'
-    element.style.top = coords.pageY + 'px'
+    element.style.left = clickEvent.pageX + 'px'
+    element.style.top = clickEvent.pageY + 'px'
     element.classList.add(model.name, DIAGRAM_ELEMENT_CLASS)
 
     const nameSpan = document.createElement('span')
