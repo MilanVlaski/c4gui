@@ -34,6 +34,8 @@ export class DiagramModel {
         this.personCount = 0
         this.containerCount = 0
         this.relationshipCount = 0
+        // Stores coordinates of each element keyed by element id
+        this.elementCoordinates = new Map()
     }
 
 
@@ -109,6 +111,15 @@ export class DiagramModel {
         element.displayName = newDisplayName
         this.elements.set(newDisplayName, element)
         return true
+    }
+
+    /**
+     * Save or update the coordinates for a diagram element.
+     * @param {string} elementId
+     * @param {{x:number, y:number}} coords
+     */
+    setElementCoordinates(elementId, coords) {
+        this.elementCoordinates.set(elementId, coords)
     }
 
 }

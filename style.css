@@ -6,6 +6,7 @@ body {
     border: 1px black solid;
     height: 100vh;
     background-color: #bbb; 
+    position: relative;
 
     
     /* Disables scrolling */

@@ -8,6 +8,20 @@ let canvasState = DEFAULT_STATE
 // without touching other canvas children (e.g., UI overlays).
 const DIAGRAM_ELEMENT_CLASS = 'diagram-element'
 
+/**
+ * Translate global pointer coordinates to coordinates relative to the canvas.
+ * @param {PointerEvent|MouseEvent} evt
+ * @param {HTMLElement} canvasEl
+ * @returns {{x:number, y:number}}
+ */
+function toCanvasCoords(evt, canvasEl) {
+    const rect = canvasEl.getBoundingClientRect()
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top,
+    }
+}
+
 /* ---------- Toolbar management helpers ---------- */
 
 /**
@@ -150,12 +164,15 @@ function addDoublePressListener(target, handler, threshold = 300) {
 
 function createHtmlElementFromModel(clickEvent, model) {
     console.log(clickEvent)
+    const { x, y } = toCanvasCoords(clickEvent, canvas)
     let element = document.createElement('div')
     element.id = model.displayName
     element.style.position = 'absolute'
-    element.style.left = clickEvent.pageX + 'px'
-    element.style.top = clickEvent.pageY + 'px'
+    element.style.left = x + 'px'
+    element.style.top = y + 'px'
     element.classList.add(model.name, DIAGRAM_ELEMENT_CLASS)
+    // Persist coordinates in the diagram model for later use
+    diagramModel.setElementCoordinates(element.id, { x, y })
 
     const nameSpan = document.createElement('span')
     nameSpan.textContent = model.displayName
