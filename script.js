@@ -1,7 +1,7 @@
 import { DiagramElement, DiagramModel } from "./Model.js"
 
 let diagramModel = new DiagramModel()
-const DEFAULT_STATE = { name: 'DEFAULT', click: () => {}, pointerup: () => {}}
+const DEFAULT_STATE = { name: 'DEFAULT', click: () => { }, pointerup: () => { } }
 let canvasState = DEFAULT_STATE
 
 // CSS class applied to every diagram element so we can remove them
@@ -62,7 +62,7 @@ function startPlacingDiagramElement(diagramElement) {
 // Variables used to display a temporary "connecting" line
 let previewLine = null
 let tempAnchor = null
-let pointerMoveHandler = null
+let repositionPreviewLine = null
 
 const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
@@ -88,7 +88,7 @@ function placingState(model) {
                 canvasState = DEFAULT_STATE
             }
         },
-        pointerup: () => {},
+        pointerup: () => { },
     }
 }
 
@@ -101,9 +101,9 @@ function cleanupConnectingPreview() {
         tempAnchor.remove()
         tempAnchor = null
     }
-    document.removeEventListener('pointermove', pointerMoveHandler)
-    if (pointerMoveHandler) {
-        pointerMoveHandler = null
+    document.removeEventListener('pointermove', repositionPreviewLine)
+    if (repositionPreviewLine) {
+        repositionPreviewLine = null
     }
 }
 
@@ -113,13 +113,10 @@ function cleanupConnectingPreview() {
  * can be repopulated with containers.
  */
 function clearCanvas() {
-    // Remove only the diagram elements, leave any other overlay/ui nodes
     canvas
         .querySelectorAll(`.${DIAGRAM_ELEMENT_CLASS}`)
         .forEach(el => el.remove());
-    // Remove any LeaderLine SVGs that were injected into the document
     document.querySelectorAll('.leader-line').forEach(el => el.remove());
-    // Clear any in-progress connection preview
     cleanupConnectingPreview();
     canvasState = DEFAULT_STATE;
 }
@@ -164,22 +161,20 @@ function createHtmlElementFromModel(coords, model) {
 
     element.appendChild(nameSpan)
 
-    // extract to function
-
     enableInlineEdit(nameSpan)
 
     const finishConnecting = (e) => {
-        if (canvasState.sourceElement !== element && diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
+        if (canvasState.sourceElement !== element
+            && diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
             new LeaderLine(canvasState.sourceElement, element)
         }
         cleanupConnectingPreview()
         canvasState = DEFAULT_STATE
     }
 
+    element.addEventListener('pointerup', finishConnecting)
     // extract to function
     element.addEventListener('pointerdown', e => {
-        // Enter CONNECTING state – remember the source element
-
         canvasState = {
             name: 'CONNECTING',
             sourceElement: element,
@@ -200,17 +195,16 @@ function createHtmlElementFromModel(coords, model) {
         // Draw temporary dashed line from the source element to the pointer
         previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true }, path: 'straight', endPlug: 'behind' })
 
-        pointerMoveHandler = moveEvent => {
+        repositionPreviewLine = moveEvent => {
             tempAnchor.style.left = moveEvent.clientX + 'px'
             tempAnchor.style.top = moveEvent.clientY + 'px'
             previewLine.position()
         }
 
         // Keep the anchor stuck to the pointer as it moves
-        document.addEventListener('pointermove', pointerMoveHandler)
+        document.addEventListener('pointermove', repositionPreviewLine)
     })
 
-    element.addEventListener('pointerup', finishConnecting)
 
     // Double-click / Double-tap handler
     addDoublePressListener(element, (ev) => {
@@ -232,43 +226,47 @@ document.addEventListener('pointerup', () => {
     canvasState.pointerup()
 })
 
-    function enableInlineEdit(labelEl) {
+/**
+ * Enable editing of diagram elements.
+ * @param {*} labelEl 
+ */
+function enableInlineEdit(labelEl) {
 
-        labelEl.addEventListener('click', function startEditing(e) {
-            e.stopPropagation()
-            const currentText = this.textContent
-            const input = document.createElement('input')
-            input.position = 'absolute'
-            input.value = currentText
-            input.style.minWidth = '50px'
-            this.replaceWith(input)
-            input.focus()
+    labelEl.addEventListener('click', function startEditing(e) {
+        e.stopPropagation()
+        const currentText = this.textContent
+        const input = document.createElement('input')
+        input.position = 'absolute'
+        input.value = currentText
+        input.style.minWidth = '50px'
+        this.replaceWith(input)
+        input.focus()
 
-            const finish = () => {
-                const proposedText = input.value.trim()
-                let finalText = model.displayName
+        const finish = () => {
+            const proposedText = input.value.trim()
+            let finalText = model.displayName
 
-                if (proposedText && proposedText !== model.displayName) {
-                    if (diagramModel.renameElement(model.displayName, proposedText)) {
-                        finalText = proposedText     // rename succeeded
-                    } else {
-                        alert(`An element named "${proposedText}" already exists.`)
-                    }
+            if (proposedText && proposedText !== model.displayName) {
+                if (diagramModel.renameElement(model.displayName, proposedText)) {
+                    finalText = proposedText     // rename succeeded
+                } else {
+                    alert(`An element named "${proposedText}" already exists.`)
                 }
-
-                const span = document.createElement('span')
-                span.textContent = finalText
-                span.style.userSelect = 'none'
-                // Re-enable inline editing on the new span
-                enableInlineEdit(span)
-                input.replaceWith(span)
             }
 
-            input.addEventListener('blur', finish)
-            input.addEventListener('keydown', ev => {
-                if (ev.key === 'Enter' || ev.key === 'Escape') {
-                    input.blur()
-                }
-            })
+            const span = document.createElement('span')
+            span.textContent = finalText
+            span.style.userSelect = 'none'
+            // Re-enable inline editing on the new span
+            enableInlineEdit(span)
+            input.replaceWith(span)
+        }
+
+        input.addEventListener('blur', finish)
+        input.addEventListener('keydown', ev => {
+            if (ev.key === 'Enter' || ev.key === 'Escape') {
+                input.blur()
+            }
         })
-    }
+    })
+}
