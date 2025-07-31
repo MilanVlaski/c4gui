@@ -68,6 +68,7 @@ const canvas = document.getElementById('canvas')
 const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
 const personBtn = document.getElementById('placePerson')
 const toolbar = document.getElementById('toolbar')
+const viewHeading = document.getElementById('view-heading')
 
 softwareSystemBtn.addEventListener('click', function () {
     startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
@@ -211,6 +212,7 @@ function createHtmlElementFromModel(coords, model) {
         if (model.name === 'softwareSystem') {
             clearCanvas()
             setupContainerViewToolbar()
+            viewHeading.textContent = model.displayName
         }
     })
 
