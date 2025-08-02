@@ -1,5 +1,5 @@
 ### To do
-- [ ] Refactor functions.
+- [x] Refactor functions.
 - [ ] On single click, instead of displaying the input, display a form on top of the diagram element.
 	- Form should have an OK and cancel
 	- Form should go away once we click away, like the input does. Can be done with blur event?
@@ -9,9 +9,9 @@
 	- When I double click on the software system
 	- [x] Then the canvas will be cleared
 	- [x] And the buttons will be replaced with a Container button, Software System button and Person button
-	- [ ] And the heading will display the display name of the software system
+	- [x] And the heading will display the display name of the software system
 	- [ ] When I click the back arrow on the top left of the canvas
-	- [ ] The canvas will have the element at the position it was left at
+	- [ ] The canvas will have the elements at the position it was left at
 	- [ ]
 - [ ] Add database button to container view
 	- [ ] Just redraw the elements, memorizing their positions for this purpose.
