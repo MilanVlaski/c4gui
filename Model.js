@@ -36,6 +36,8 @@ export class DiagramModel {
         this.relationshipCount = 0
         // Stores coordinates of each element keyed by element id
         this.elementCoordinates = new Map()
+        // Stack used for navigation; most recently clicked elements are at the end
+        this.navigationStack = []
     }
 
 
@@ -120,6 +122,19 @@ export class DiagramModel {
      */
     setElementCoordinates(elementId, coords) {
         this.elementCoordinates.set(elementId, coords)
+    }
+
+    /**
+     * Push the given element id onto the navigation stack. If the element
+     * is already present it is first removed so that it ends up on top.
+     * @param {string} elementId
+     */
+    pushToStack(elementId) {
+        const index = this.navigationStack.indexOf(elementId)
+        if (index !== -1) {
+            this.navigationStack.splice(index, 1)
+        }
+        this.navigationStack.push(elementId)
     }
 
 }

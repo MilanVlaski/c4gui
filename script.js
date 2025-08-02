@@ -231,6 +231,7 @@ function createHtmlElementFromModel(clickEvent, model) {
             clearCanvas()
             setupContainerViewToolbar()
             viewHeading.textContent = model.displayName
+            diagramModel.pushToStack(element.id)
         }
     })
 
