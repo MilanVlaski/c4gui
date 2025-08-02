@@ -1,6 +1,6 @@
 C4 modelling app that exports to Structurizr DSL
 ### Index
-- [C4GUI Architecture Baseline](docs/C4GUI%20Architecture%20Baseline)
+- [C4GUI Architecture Baseline](docs/C4GUI%20Architecture%20Baseline.md)
 ### Glossary
 - [C4 Model](https://c4model.com/introduction)
 - [Structurizr](https://structurizr.com/)
