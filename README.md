@@ -3,8 +3,8 @@ C4 modelling app that exports to Structurizr DSL
 - [C4GUI Architecture Baseline](docs/C4GUI%20Architecture%20Baseline.md)
 - [To do](TODO.md)
 ### Glossary
-- [C4 Model](https://c4model.com/introduction)
-- [Structurizr](https://structurizr.com/)
+- [C4 Model](https://c4model.com/introduction) - represents software systems in 4 views, starting with C: system Context, Container, Component, Code.
+- [Structurizr](https://structurizr.com/) - a project that allows drawing C4 models with a DSL, as well as exporting between formats like the ones used by PlantUML or Mermaid.
 ## High level plan
 - [x] Do a little model with Structurizr to familiarize with the usage
 	- [x] Modelling
