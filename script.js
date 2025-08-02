@@ -225,8 +225,8 @@ function createHtmlElementFromModel(clickEvent, model) {
     })
 
 
-    // Double-click / Double-tap handler
     addDoublePressListener(element, (ev) => {
+        // Same behavior for containers or components
         if (model.name === 'softwareSystem') {
             clearCanvas()
             setupContainerViewToolbar()
