@@ -180,7 +180,7 @@ function createHtmlElementFromModel(clickEvent, model) {
 
     element.appendChild(nameSpan)
 
-    enableInlineEdit(nameSpan)
+    enableInlineEdit(nameSpan, model)
 
     const finishConnecting = (e) => {
         if (canvasState.sourceElement !== element
@@ -225,17 +225,27 @@ function createHtmlElementFromModel(clickEvent, model) {
     })
 
 
-    addDoublePressListener(element, (ev) => {
+    addDoublePressListener(element, rebuildPage(model))
+
+    return element
+}
+
+/**
+ * Rebuild the page, based on the view that the current element belongs to - Context, Container or Component
+ * @param {DiagramElement} model Optional DiagramElement which was "zoomed" into
+ * @returns Function that will rebuild the html page 
+ */
+function rebuildPage(model) {
+    return (ev) => {
         // Same behavior for containers or components
         if (model.name === 'softwareSystem') {
             clearCanvas()
+            // Based on the element type, set up the tooblar differently
             setupContainerViewToolbar()
             viewHeading.textContent = model.displayName
-            diagramModel.pushToStack(element.id)
+            diagramModel.pushToStack(model.displayName)
         }
-    })
-
-    return element
+    }
 }
 
 
@@ -251,7 +261,7 @@ document.addEventListener('pointerup', () => {
  * Enable editing of diagram elements.
  * @param {*} labelEl 
  */
-function enableInlineEdit(labelEl) {
+function enableInlineEdit(labelEl, model) {
 
     labelEl.addEventListener('click', function startEditing(e) {
         e.stopPropagation()
@@ -279,7 +289,7 @@ function enableInlineEdit(labelEl) {
             span.textContent = finalText
             span.style.userSelect = 'none'
             // Re-enable inline editing on the new span
-            enableInlineEdit(span)
+            enableInlineEdit(span, model)
             input.replaceWith(span)
         }
 

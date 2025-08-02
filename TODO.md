@@ -1,4 +1,10 @@
 ### To do
+- [ ] Back button, on the top left of the canvas.
+	- [ ] Starts out grey, not interactable
+	- [ ] When an element (software system for now), is double clicked, the back button receives the event, telling it to look at the stack, and become interactable if the stack is not empty, which it will not be, because elements get added.
+	- [ ] When the back button is clicked, pop the top of the stack, clear the screen and do everything in the 
+	- [ ] 
+> elements have been traversed, and clickable once an element exists on the stack, ie,  
 - [x] Refactor functions.
 - [ ] On single click, instead of displaying the input, display a form on top of the diagram element.
 	- Form should have an OK and cancel
