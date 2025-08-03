@@ -1,0 +1,43 @@
+@startuml DiagramModel
+
+class DiagramElement {
+  -displayName : String
+  -description : String
+  -name : String
+}
+
+class Relationship {
+  -id : String
+  -description : String
+  -sourceElement : DiagramElement
+  -targetElement : DiagramElement
+}
+
+class DiagramModel {
+  -elements : Map<String, DiagramElement>
+  -relationships : Map<String, Relationship>
+  -softwareSystemCount : Number
+  -personCount : Number
+  -containerCount : Number
+  -relationshipCount : Number
+  -elementCoordinates : Map<String, Point>
+  -navigationStack : List<String>
+
+  +addElement(element : DiagramElement) : DiagramElement
+  +addRelationshipBetween(sourceId : String, targetId : String) : Map
+  +renameElement(oldName : String, newName : String) : Boolean
+  +setElementCoordinates(id : String, coords : Point) : void
+  +pushToStack(id : String) : void
+  +popFromStack() : String
+  +isStackEmpty() : Boolean
+}
+
+DiagramModel "1" *-- "*" DiagramElement : elements
+DiagramModel "1" *-- "*" Relationship : relationships
+Relationship "1" --> "1" DiagramElement : source
+Relationship "1" --> "1" DiagramElement : target
+
+note "Point = { x : Number, y : Number }" as N1
+DiagramModel .. N1
+
+@enduml
