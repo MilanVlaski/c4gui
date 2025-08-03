@@ -137,5 +137,22 @@ export class DiagramModel {
         this.navigationStack.push(elementId)
     }
 
+    /**
+     * Pop and return the most recently visited element id from the navigation
+     * stack. Returns undefined if the stack is empty.
+     * @returns {string|undefined}
+     */
+    popFromStack() {
+        return this.navigationStack.pop()
+    }
+
+    /**
+     * Check whether the navigation stack is empty.
+     * @returns {boolean}
+     */
+    isStackEmpty() {
+        return this.navigationStack.length === 0
+    }
+
 }
 

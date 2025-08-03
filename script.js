@@ -68,6 +68,22 @@ function setupContainerViewToolbar() {
     })
 }
 
+/**
+ * Toolbar composition for the *system context* (root) view.
+ */
+function setupSystemContextToolbar() {
+    clearToolbarButtons()
+    addToolbarButton('placeSoftwareSystem', 'Software System', () => {
+        startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
+    })
+    addToolbarButton('placePerson', 'Person', () => {
+        startPlacingDiagramElement(new DiagramElement('Person', '', 'person'))
+    })
+}
+
+// Initialise toolbar on load
+setupSystemContextToolbar()
+
 function startPlacingDiagramElement(diagramElement) {
     console.log(`Placing ${diagramElement.displayName}`)
     canvasState = placingState(diagramElement)
@@ -83,6 +99,44 @@ const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
 const personBtn = document.getElementById('placePerson')
 const toolbar = document.getElementById('toolbar')
 const viewHeading = document.getElementById('view-heading')
+
+/* ---------- Navigation back button ---------- */
+canvas.style.position = 'relative'    // make canvas a positioning context
+
+const backButton = document.createElement('button')
+backButton.id = 'back-button'
+backButton.textContent = '←'
+backButton.disabled = true
+backButton.style.position = 'absolute'
+backButton.style.top = '10px'
+backButton.style.left = '10px'
+backButton.style.opacity = '0.5'
+backButton.classList.add('back-button')
+
+canvas.appendChild(backButton)
+
+/**
+ * Enable / disable the back button based on the navigation stack.
+ */
+function updateBackButtonState() {
+    backButton.disabled = diagramModel.isStackEmpty()
+    backButton.style.opacity = backButton.disabled ? '0.5' : '1'
+}
+
+backButton.addEventListener('click', () => {
+    if (diagramModel.isStackEmpty()) {
+        return
+    }
+
+    const poppedDisplayName = diagramModel.popFromStack()
+    const poppedElement = diagramModel.elements.get(poppedDisplayName)
+
+    clearCanvas()
+    setupSystemContextToolbar()
+    redrawElements()
+    viewHeading.textContent = 'System Context'
+    updateBackButtonState()
+})
 
 softwareSystemBtn.addEventListener('click', function () {
     startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
@@ -244,6 +298,7 @@ function rebuildPage(model) {
             setupContainerViewToolbar()
             viewHeading.textContent = model.displayName
             diagramModel.pushToStack(model.displayName)
+            updateBackButtonState()
         }
     }
 }
@@ -299,5 +354,37 @@ function enableInlineEdit(labelEl, model) {
                 input.blur()
             }
         })
+    })
+}
+
+/**
+ * Recreate all HTML elements and relationship lines from the in-memory
+ * model.  Used when navigating back up the view hierarchy.
+ */
+function redrawElements() {
+    // Rebuild elements
+    diagramModel.elements.forEach((model, id) => {
+        const coords = diagramModel.elementCoordinates.get(id)
+        if (!coords) return
+
+        const rect = canvas.getBoundingClientRect()
+        const fakeEvt = {
+            clientX: coords.x + rect.left,
+            clientY: coords.y + rect.top,
+            pageX: coords.x + rect.left,
+            pageY: coords.y + rect.top
+        }
+
+        const el = createHtmlElementFromModel(fakeEvt, model)
+        canvas.appendChild(el)
+    })
+
+    // Rebuild relationships
+    diagramModel.relationships.forEach(rel => {
+        const src = document.getElementById(rel.sourceElement.displayName)
+        const tgt = document.getElementById(rel.targetElement.displayName)
+        if (src && tgt) {
+            new LeaderLine(src, tgt)
+        }
     })
 }
