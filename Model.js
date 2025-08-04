@@ -7,8 +7,8 @@
  */
 export class DiagramElement {
     constructor(displayName, description = '', name) {
-        this.displayName = displayName;
-        this.description = description;
+        this.displayName = displayName
+        this.description = description
         this.name = name
     }
 }
