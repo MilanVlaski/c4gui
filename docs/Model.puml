@@ -14,8 +14,6 @@ class Relationship {
 }
 
 class DiagramModel {
-  -elements : Map<String, DiagramElement>
-  -relationships : Map<String, Relationship>
   -softwareSystemCount : Number
   -personCount : Number
   -containerCount : Number
