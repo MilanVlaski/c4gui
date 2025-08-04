@@ -1,9 +1,23 @@
 ### To do
+- DiagramElements contain a list of DiagramElements (references), and 
+- DiagramElements can contain other DiagramElements, the strictness of which is maintained by the GUI. The relationship can either be an INCLUDE or a CONTAIN, and it applies such that:
+	- INCLUDES means the element is included in the view of this element
+	- CONTAINS means the element is contained within this element, which of course, makes it visible too
+	- When an element is added, to a diagram (or element), that element will CONTAIN that element, if it belongs to the layer below it, and it will INCLUDE it, if it belongs to the layer above. 
+	- For C4:
+	-  a CONTAINED element must be only 1 layer below
+	- an INCLUDED element must come only from higher layers
+- Therefore, each DiagramElement can include or contain elements. When an element is added to it, it must check that element's layer (1 2 3 4) to see if it should include or contain it. This is kept in a "composition" map, with an id, type of relationship.
+- [ ] To redraw accurately, and because elements can take any place on a canvas, we must remember the position of an element 
+relative to the view it is in. 
+- [ ] We must only redraw elements that are belonging to a certain view
+- [ ] Put back button in index.html and style.css, not in script.js
 - [ ] Back button, on the top left of the canvas.
 	- [ ] Starts out grey, not interactable
 	- [ ] When an element (software system for now), is double clicked, the back button receives the event, telling it to look at the stack, and become interactable if the stack is not empty, which it will not be, because elements get added.
-	- [ ] When the back button is clicked, pop the top of the stack, clear the screen and do everything in the 
-	- [ ] 
+	- [ ] When the back button is clicked, pop the top of the stack, call the rebuildPage function, with the param being the element popped from the stack.
+	- [ ] In rebuild page, call a function called `redrawElements`, which will use the DiagramElements from the DiagramModel, alongside their coordinates.
+		- [ ] In a second step, it will redraw the relationships, by simply creating the leaderlines that are necessary.
 > elements have been traversed, and clickable once an element exists on the stack, ie,  
 - [x] Refactor functions.
 - [ ] On single click, instead of displaying the input, display a form on top of the diagram element.
