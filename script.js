@@ -8,6 +8,9 @@ let canvasState = DEFAULT_STATE
 // without touching other canvas children (e.g., UI overlays).
 const DIAGRAM_ELEMENT_CLASS = 'diagram-element'
 
+
+/* ---------- Dom functions ---------- */
+
 /**
  * Translate global pointer coordinates to coordinates relative to the canvas.
  * @param {PointerEvent|MouseEvent} evt
@@ -21,8 +24,6 @@ function toCanvasCoords(evt, canvasEl) {
         y: evt.clientY - rect.top,
     }
 }
-
-/* ---------- Toolbar management helpers ---------- */
 
 /**
  * Remove every button from the sidebar toolbar.
@@ -46,6 +47,9 @@ function addToolbarButton(id, label, onClick) {
     btn.addEventListener('click', onClick)
     toolbar.appendChild(btn)
 }
+
+/* ---------- Dom functions ---------- */
+
 
 /**
  * Toolbar composition for the *container view* entered after zooming
@@ -97,9 +101,7 @@ const personBtn = document.getElementById('placePerson')
 const toolbar = document.getElementById('toolbar')
 const viewHeading = document.getElementById('view-heading')
 
-/* ---------- Navigation back button ---------- */
-canvas.style.position = 'relative'    // make canvas a positioning context
-
+// Move this crap to index.html and style.css
 const backButton = document.createElement('button')
 backButton.id = 'back-button'
 backButton.textContent = '←'
@@ -111,6 +113,7 @@ backButton.style.opacity = '0.5'
 backButton.classList.add('back-button')
 
 canvas.appendChild(backButton)
+// Move this crap to index.html and style.css
 
 /**
  * Enable / disable the back button based on the navigation stack.
@@ -125,8 +128,7 @@ backButton.addEventListener('click', () => {
         return
     }
 
-    const poppedDisplayName = diagramModel.popFromStack()
-    const poppedElement = diagramModel.elements.get(poppedDisplayName)
+    const poppedElement = diagramModel.popFromStack()
 
     clearCanvas()
     // Toolbar depends on the type of the model
@@ -216,7 +218,7 @@ function addDoublePressListener(target, handler, threshold = 300) {
 }
 
 function createHtmlElementFromModel(clickEvent, model) {
-    console.log(clickEvent)
+
     const { x, y } = toCanvasCoords(clickEvent, canvas)
     let element = document.createElement('div')
     element.id = model.displayName
@@ -296,7 +298,7 @@ function rebuildPage(model) {
             // Based on the element type, set up the tooblar differently
             setupContainerViewToolbar()
             viewHeading.textContent = model.displayName
-            diagramModel.pushToStack(model.displayName)
+            diagramModel.pushToStack(model)
             updateBackButtonState()
         }
     }

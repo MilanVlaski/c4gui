@@ -140,9 +140,9 @@ export class DiagramModel {
     }
 
     /**
-     * Pop and return the most recently visited element id from the navigation
+     * Pop and return the most recently visited element from the navigation
      * stack. Returns undefined if the stack is empty.
-     * @returns {string|undefined}
+     * @returns {DiagramElement|undefined}
      */
     popFromStack() {
         return this.navigationStack.pop()
