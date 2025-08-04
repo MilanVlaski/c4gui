@@ -81,9 +81,6 @@ function setupSystemContextToolbar() {
     })
 }
 
-// Initialise toolbar on load
-setupSystemContextToolbar()
-
 function startPlacingDiagramElement(diagramElement) {
     console.log(`Placing ${diagramElement.displayName}`)
     canvasState = placingState(diagramElement)
@@ -132,7 +129,9 @@ backButton.addEventListener('click', () => {
     const poppedElement = diagramModel.elements.get(poppedDisplayName)
 
     clearCanvas()
+    // Toolbar depends on the type of the model
     setupSystemContextToolbar()
+    // Redraw only the elements g
     redrawElements()
     viewHeading.textContent = 'System Context'
     updateBackButtonState()
