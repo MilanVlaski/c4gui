@@ -1,4 +1,7 @@
 ### To do
+- [ ] Prepare changes by making SystemContext a rootelement
+- [ ] Add logic so that `redrawElements` takes DiagramElement as a parameter, and redraws only those elements
+	- [ ] Must add elements to the proper DiagramElement. This can be done when adding, just call to `currentElement.addElement()`
 - DiagramElements contain a list of DiagramElements (references), and 
 - DiagramElements can contain other DiagramElements, the strictness of which is maintained by the GUI. The relationship can either be an INCLUDE or a CONTAIN, and it applies such that:
 	- INCLUDES means the element is included in the view of this element

@@ -339,7 +339,7 @@ function zoomIntoModel(model) {
     if (model.name === 'softwareSystem') {
         setupContainerViewToolbar()
     }
-    // This should redraw elements at some point
+    // redrawElements(model)
 }
 
 function zoomOutOfModel() {

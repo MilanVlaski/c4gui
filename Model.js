@@ -129,14 +129,14 @@ export class DiagramModel {
     /**
      * Push the given element id onto the navigation stack. If the element
      * is already present it is first removed so that it ends up on top.
-     * @param {string} elementId
+     * @param {DiagramElement} element 
      */
-    pushToStack(elementId) {
-        const index = this.navigationStack.indexOf(elementId)
+    pushToStack(element) {
+        const index = this.navigationStack.indexOf(element)
         if (index !== -1) {
             this.navigationStack.splice(index, 1)
         }
-        this.navigationStack.push(elementId)
+        this.navigationStack.push(element)
     }
 
     /**
