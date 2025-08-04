@@ -123,21 +123,8 @@ function updateBackButtonState() {
     backButton.style.opacity = backButton.disabled ? '0.5' : '1'
 }
 
-backButton.addEventListener('click', () => {
-    if (diagramModel.isStackEmpty()) {
-        return
-    }
+backButton.addEventListener('click', zoomOutOfModel)
 
-    const poppedElement = diagramModel.popFromStack()
-
-    clearCanvas()
-    // Toolbar depends on the type of the model
-    setupSystemContextToolbar()
-    // Redraw only the elements g
-    redrawElements()
-    viewHeading.textContent = 'System Context'
-    updateBackButtonState()
-})
 
 softwareSystemBtn.addEventListener('click', function () {
     startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
@@ -280,28 +267,9 @@ function createHtmlElementFromModel(clickEvent, model) {
     })
 
 
-    addDoublePressListener(element, rebuildPage(model))
+    addDoublePressListener(element, () => {zoomIntoModel(model)})
 
     return element
-}
-
-/**
- * Rebuild the page, based on the view that the current element belongs to - Context, Container or Component
- * @param {DiagramElement} model Optional DiagramElement which was "zoomed" into
- * @returns Function that will rebuild the html page 
- */
-function rebuildPage(model) {
-    return (ev) => {
-        // Same behavior for containers or components
-        if (model.name === 'softwareSystem') {
-            clearCanvas()
-            // Based on the element type, set up the tooblar differently
-            setupContainerViewToolbar()
-            viewHeading.textContent = model.displayName
-            diagramModel.pushToStack(model)
-            updateBackButtonState()
-        }
-    }
 }
 
 
@@ -356,6 +324,42 @@ function enableInlineEdit(labelEl, model) {
             }
         })
     })
+}
+
+
+/**
+ * @param {DiagramElement} model Optional DiagramElement which was "zoomed" into
+ * @returns Function that will rebuild the html page 
+ */
+function zoomIntoModel(model) {
+    diagramModel.pushToStack(model)
+    clearCanvas()
+    viewHeading.textContent = model.displayName
+    updateBackButtonState()
+    if (model.name === 'softwareSystem') {
+        setupContainerViewToolbar()
+    }
+    // This should redraw elements at some point
+}
+
+function zoomOutOfModel() {
+    // Should never happen.
+    if (diagramModel.isStackEmpty()) {
+        return
+    }
+
+    var poppedElement = diagramModel.popFromStack()
+
+    clearCanvas()
+    // Adding a "root element" would simplify this code
+    viewHeading.textContent = 'System Context'
+    // Toolbar depends on the type of the model
+    updateBackButtonState()
+    if(poppedElement.name === 'container') {
+        setupSystemContextToolbar()
+    }
+
+    redrawElements()
 }
 
 /**
