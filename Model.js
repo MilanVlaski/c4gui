@@ -10,10 +10,14 @@ export class DiagramElement {
         this.displayName = displayName
         this.description = description
         this.name = name
+        this.elements = []
+        // this.rootElement = new DiagramElement('System Context', '', 'systemContext')
+        // this.currentElement = this.rootElement
     }
 }
 
 export class Relationship {
+    // Id should be constructed... in the constructor
     constructor(id, sourceElement, targetElement) {
         this.id = id
         this.sourceElement = sourceElement
@@ -33,7 +37,6 @@ export class DiagramModel {
         this.softwareSystemCount = 0
         this.personCount = 0
         this.containerCount = 0
-        this.relationshipCount = 0
         // Stores coordinates of each element keyed by element id
         this.elementCoordinates = new Map()
         // Stack used for navigation; most recently clicked elements are at the end
@@ -84,7 +87,6 @@ export class DiagramModel {
 
         const relationshipId = `${sourceElementId}:${targetElementId}`
         if(!this.relationships.has(relationshipId)) {
-            this.relationshipCount++
             const newRelationship = new Relationship(relationshipId, sourceElement, targetElement)
 
             return this.relationships.set(relationshipId, newRelationship)
