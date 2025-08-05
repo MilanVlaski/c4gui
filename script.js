@@ -62,14 +62,6 @@ function setupContainerViewToolbar() {
     addToolbarButton('placeContainer', 'Container', () => {
         startPlacingDiagramElement(new DiagramElement('Container', '', 'container'))
     })
-
-    addToolbarButton('placeSoftwareSystem', 'Software System', () => {
-        startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
-    })
-
-    addToolbarButton('placePerson', 'Person', () => {
-        startPlacingDiagramElement(new DiagramElement('Person', '', 'person'))
-    })
 }
 
 /**
