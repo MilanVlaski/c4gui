@@ -173,7 +173,11 @@ export class DiagramModel {
      */
     popFromStack() {
         const poppedElement = this.navigationStack.pop()
-        this.currentElement = poppedElement
+        // After popping, point to the previous element in the stack
+        this.currentElement =
+            this.navigationStack.length > 0
+                ? this.navigationStack[this.navigationStack.length - 1]
+                : this.rootElement
         return poppedElement
     }
 

@@ -343,22 +343,26 @@ function zoomIntoModel(model) {
 }
 
 function zoomOutOfModel() {
-    // Should never happen.
+    // Nothing to do if we are already at the root element
     if (diagramModel.isStackEmpty()) {
         return
     }
 
-    var poppedElement = diagramModel.popFromStack()
+    const poppedElement = diagramModel.popFromStack()
+    const targetElement = diagramModel.currentElement   // new view to display
 
     clearCanvas()
-    viewHeading.textContent = poppedElement.displayName
-    // Toolbar depends on the type of the model
+    viewHeading.textContent = targetElement.displayName
+
+    // Update UI controls
     updateBackButtonState()
-    if(poppedElement.name === 'container') {
+    if (targetElement.name === 'softwareSystem') {
+        setupContainerViewToolbar()
+    } else {
         setupSystemContextToolbar()
     }
 
-    redrawElements(poppedElement)
+    redrawElements(targetElement)
 }
 
 /**
