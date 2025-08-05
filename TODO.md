@@ -1,8 +1,23 @@
 ### To do
-- [ ] Prepare changes by making SystemContext a rootelement
-- [ ] Add logic so that `redrawElements` takes DiagramElement as a parameter, and redraws only those elements
-	- [ ] Must add elements to the proper DiagramElement. This can be done when adding, just call to `currentElement.addElement()`
-- DiagramElements contain a list of DiagramElements (references), and 
+- [ ] Create tree on the left, for pulling in reusable elements (from higher views).
+	- Make sure only elements that come from a higher layer can be placed onto the current diagram.
+- [z] Prepare changes by making SystemContext a rootelement
+- [z] Add logic so that `redrawElements` takes DiagramElement as a parameter, and redraws only those elements
+	- [x] Must add elements to the proper DiagramElement. This can be done when adding, just call to `currentElement.addElement()`
+- [ ] Put back button in index.html and style.css, not in script.js
+- [x] Refactor functions.
+- [ ] On single click **on the diagram tree**, instead of displaying the input, display a form for renaming the properties of an element.
+	- Form should have an OK and cancel
+	- Form should go away once we click away, like the input does. Can be done with blur event?
+- [ ] Add database button to container view
+- [ ] Have a fixed thing at the top which has a "Pan" button, to move the canvas around.
+- [ ] Hover over relationship arrow and enable adding text on top of it
+	- Tough. Maybe try from the sidebar instead.
+- [ ] Centered toolbar
+	- [ ] Arranging state (Draggable etc?).
+		- [ ] Mouse becomes drag.
+	- [ ] Panning state
+### The composition issue
 - DiagramElements can contain other DiagramElements, the strictness of which is maintained by the GUI. The relationship can either be an INCLUDE or a CONTAIN, and it applies such that:
 	- INCLUDES means the element is included in the view of this element
 	- CONTAINS means the element is contained within this element, which of course, makes it visible too
@@ -11,42 +26,8 @@
 	-  a CONTAINED element must be only 1 layer below
 	- an INCLUDED element must come only from higher layers
 - Therefore, each DiagramElement can include or contain elements. When an element is added to it, it must check that element's layer (1 2 3 4) to see if it should include or contain it. This is kept in a "composition" map, with an id, type of relationship.
-- [ ] To redraw accurately, and because elements can take any place on a canvas, we must remember the position of an element 
-relative to the view it is in. 
-- [ ] We must only redraw elements that are belonging to a certain view
-- [ ] Put back button in index.html and style.css, not in script.js
-- [ ] Back button, on the top left of the canvas.
-	- [ ] Starts out grey, not interactable
-	- [ ] When an element (software system for now), is double clicked, the back button receives the event, telling it to look at the stack, and become interactable if the stack is not empty, which it will not be, because elements get added.
-	- [ ] When the back button is clicked, pop the top of the stack, call the rebuildPage function, with the param being the element popped from the stack.
-	- [ ] In rebuild page, call a function called `redrawElements`, which will use the DiagramElements from the DiagramModel, alongside their coordinates.
-		- [ ] In a second step, it will redraw the relationships, by simply creating the leaderlines that are necessary.
-> elements have been traversed, and clickable once an element exists on the stack, ie,  
-- [x] Refactor functions.
-- [ ] On single click, instead of displaying the input, display a form on top of the diagram element.
-	- Form should have an OK and cancel
-	- Form should go away once we click away, like the input does. Can be done with blur event?
-	- Optional. Form should go to the left or right if there is space.
-- [ ] Double click on a software system leads to a zoom in to container view.
-	- Given I have placed a software system in the system context view
-	- When I double click on the software system
-	- [x] Then the canvas will be cleared
-	- [x] And the buttons will be replaced with a Container button, Software System button and Person button
-	- [x] And the heading will display the display name of the software system
-	- [ ] When I click the back arrow on the top left of the canvas
-	- [ ] The canvas will have the elements at the position it was left at
-	- [ ]
-- [ ] Add database button to container view
-	- [ ] Just redraw the elements, memorizing their positions for this purpose.
-	-  Double clicking a Container means the canvas is cleared, and loaded with the container contents, with the name of the Container, and appropriate buttons, etc.
-	- The page will be loaded dynamically, because that's much faster.
-- [ ] Have a fixed thing at the top which has a "Pan" button, to move the canvas around.
-- [ ] Hover over relationship arrow and enable adding text on top of it
-	- Tough. Maybe try from the sidebar instead.
-- [ ] Centered toolbar
-	- [ ] Arranging state (Draggable etc?).
-		- [ ] Mouse becomes drag.
-	- [ ] Panning state
+- The purpose of this all is to be able to avoid duplicates when creating the final serialized model.
+---
 #### Model
 - [ ] Tree on the left with currently existing elements
 	- [ ] Drag and drop elements. Important, to promote reuse.
