@@ -26,8 +26,8 @@ body {
     border: 1px solid black;
 }
 
-.softwareSystem:hover, .container:hover {
-    box-shadow: 0 0 3px 2px blue;
+.softwareSystem:hover, .container:hover, .person:hover {
+    cursor: pointer;
 }
 
 .person {
@@ -64,8 +64,3 @@ body {
     border-radius: 8px;
     margin-top: 2px;
 }
-
-.person:hover {
-  box-shadow: 0 0 3px 2px blue;
-}
-
