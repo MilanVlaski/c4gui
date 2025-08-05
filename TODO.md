@@ -1,11 +1,7 @@
 ### To do
 - [ ] Create tree on the left, for pulling in reusable elements (from higher views).
 	- Make sure only elements that come from a higher layer can be placed onto the current diagram.
-- [z] Prepare changes by making SystemContext a rootelement
-- [z] Add logic so that `redrawElements` takes DiagramElement as a parameter, and redraws only those elements
-	- [x] Must add elements to the proper DiagramElement. This can be done when adding, just call to `currentElement.addElement()`
 - [ ] Put back button in index.html and style.css, not in script.js
-- [x] Refactor functions.
 - [ ] On single click **on the diagram tree**, instead of displaying the input, display a form for renaming the properties of an element.
 	- Form should have an OK and cancel
 	- Form should go away once we click away, like the input does. Can be done with blur event?
@@ -42,6 +38,9 @@
 - [ ] Connecting doesn't work on mobile. Events don't propagate correctly.
 	- [ ] Fix the mobile connecting problem by having the same handler for both mouse and touch.
 #### Solved
+- [z] Prepare changes by making SystemContext a rootelement
+- [z] Add logic so that `redrawElements` takes DiagramElement as a parameter, and redraws only those elements
+	- [x] Must add elements to the proper DiagramElement. This can be done when adding, just call to `currentElement.addElement()`
 - [x] ContentEditable default behavior sucks. Come up with a better solution. Solved by doing an input.
 - [x] Add elements to an in memory model
 	- [x] Enforce name uniqueness by taking the name of the element, and adding a number.
