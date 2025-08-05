@@ -1,7 +1,7 @@
 /**
  * DiagramElement represents an entity that can be placed on the canvas.
  *
- *  displayName –
+ *  displayName – The displayed name.
  *  description – Optional longer description.
  *  name        – Identifier also used as a CSS class.
  */
@@ -14,7 +14,6 @@ export class DiagramElement {
         this.elements = new Map()
         /** Cached coordinates of child elements relative to this element */
         this.elementCoordinates = new Map()
-        /** Relationships where this element is either source or target */
         /** All relationships in the current diagram */
         this.relationships = new Map()
     }
@@ -38,7 +37,7 @@ export class DiagramElement {
 
     /**
      * Store a relationship that involves this element.
-     * Duplicate ids will just overwrite the previous entry, which is fine.
+     * Duplicate ids will just overwrite the previous entry.
      * @param {Relationship} relationship
      */
     addRelationship(relationship) {
@@ -47,9 +46,8 @@ export class DiagramElement {
 }
 
 export class Relationship {
-    // Id should be constructed... in the constructor
-    constructor(id, sourceElement, targetElement) {
-        this.id = id
+    constructor(sourceElement, targetElement) {
+        this.id = `${sourceElement.displayName}:${targetElement.displayName}`
         this.sourceElement = sourceElement
         this.targetElement = targetElement
         this.description = ''
@@ -116,8 +114,6 @@ export class DiagramModel {
      *
      * The relationship id is composed as
      * `${sourceElementId}:${targetElementId}` and must be unique.
-     * If a relationship with that id already exists the call logs a duplicate
-     * error and returns `undefined`.
      *
      * @param {string} sourceElementId - Identifier of the source element.
      * @param {string} targetElementId - Identifier of the target element.
@@ -127,13 +123,11 @@ export class DiagramModel {
         const sourceElement = this.elements.get(sourceElementId)
         const targetElement = this.elements.get(targetElementId)
 
-        const relationshipId = `${sourceElementId}:${targetElementId}`
-
         // Create a new relationship object every time to keep element-level history
-        const newRelationship = new Relationship(relationshipId, sourceElement, targetElement)
+        const newRelationship = new Relationship(sourceElement, targetElement)
 
         // Double write: store globally and within the involved elements
-        this.relationships.set(relationshipId, newRelationship)
+        this.relationships.set(newRelationship.id, newRelationship)
         this.currentElement.addRelationship(newRelationship)
 
         return this.relationships
