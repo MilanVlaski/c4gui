@@ -12,6 +12,8 @@ export class DiagramElement {
         this.name = name
         this.elements = new Map()
         this.elementCoordinates = new Map()
+        // Relationships where this element is either source or target
+        this.relationships = new Map()
     }
 
     addElement(element) {
@@ -25,6 +27,15 @@ export class DiagramElement {
      */
     setElementCoordinates(elementId, coords) {
         this.elementCoordinates.set(elementId, coords)
+    }
+
+    /**
+     * Store a relationship that involves this element.
+     * Duplicate ids will just overwrite the previous entry, which is fine.
+     * @param {Relationship} relationship
+     */
+    addRelationship(relationship) {
+        this.relationships.set(relationship.id, relationship)
     }
 }
 
@@ -108,13 +119,16 @@ export class DiagramModel {
         const targetElement = this.elements.get(targetElementId)
 
         const relationshipId = `${sourceElementId}:${targetElementId}`
-        if(!this.relationships.has(relationshipId)) {
-            const newRelationship = new Relationship(relationshipId, sourceElement, targetElement)
 
-            return this.relationships.set(relationshipId, newRelationship)
-        } else {
-            console.log("DUPLICATE RELATIONSHIP ERROR")
-        }
+        // Create a new relationship object every time to keep element-level history
+        const newRelationship = new Relationship(relationshipId, sourceElement, targetElement)
+
+        // Double write: store globally and within the involved elements
+        this.relationships.set(relationshipId, newRelationship)
+        if (sourceElement) sourceElement.addRelationship(newRelationship)
+        if (targetElement) targetElement.addRelationship(newRelationship)
+
+        return this.relationships
     }
 
     /**
