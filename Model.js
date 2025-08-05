@@ -10,12 +10,19 @@ export class DiagramElement {
         this.displayName = displayName
         this.description = description
         this.name = name
+        /** Child elements keyed by their displayName */
         this.elements = new Map()
+        /** Cached coordinates of child elements relative to this element */
         this.elementCoordinates = new Map()
-        // Relationships where this element is either source or target
+        /** Relationships where this element is either source or target */
+        /** All relationships in the current diagram */
         this.relationships = new Map()
     }
 
+    /**
+     * Register a child element under this element.
+     * @param {DiagramElement} element
+     */
     addElement(element) {
         this.elements.set(element.displayName, element)
     }
@@ -53,24 +60,26 @@ export class Relationship {
 export class DiagramModel {
 
     constructor() {
-        // Map of all elements is convenient, for keeping names unique
+        /** Global lookup of every element keyed by displayName */
         this.elements = new Map()
         this.relationships = new Map()
-        // Maintaining the count manually is convenient for now, but may be cumbersome later.
+        /** Number of Software System elements created so far */
         this.softwareSystemCount = 0
+        /** Number of Person elements created so far */
         this.personCount = 0
+        /** Number of Container elements created so far */
         this.containerCount = 0
-        // Stores coordinates of each element keyed by element id
+        /** Canvas coordinates for each element keyed by element id */
         this.elementCoordinates = new Map()
-        // Stack used for navigation; most recently clicked elements are at the end
+        /** History of drilled-down elements, last element is the current view */
         this.navigationStack = []
         this.rootElement = new DiagramElement('System Context', '', 'systemContext')
         this.currentElement = this.rootElement
     }
 
     /**
-     * Diagram elements which we can use to redraw the view.
-     * @returns {DiagramElement[]}
+     * Elements that belong to the currently active view.
+     * @returns {Map<string, DiagramElement>}
      */
     elementsInCurrentElement() {
         return this.currentElement.elements
@@ -162,7 +171,7 @@ export class DiagramModel {
     }
 
     /**
-     * Push the given element id onto the navigation stack. If the element
+     * Push the given element onto the navigation stack. If the element
      * is already present it is first removed so that it ends up on top.
      * @param {DiagramElement} element 
      */
