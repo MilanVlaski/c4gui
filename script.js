@@ -339,7 +339,7 @@ function zoomIntoModel(model) {
     if (model.name === 'softwareSystem') {
         setupContainerViewToolbar()
     }
-    // redrawElements(model)
+    redrawElements(model)
 }
 
 function zoomOutOfModel() {
@@ -351,22 +351,21 @@ function zoomOutOfModel() {
     var poppedElement = diagramModel.popFromStack()
 
     clearCanvas()
-    // Adding a "root element" would simplify this code
-    viewHeading.textContent = 'System Context'
+    viewHeading.textContent = poppedElement.displayName
     // Toolbar depends on the type of the model
     updateBackButtonState()
     if(poppedElement.name === 'container') {
         setupSystemContextToolbar()
     }
 
-    redrawElements()
+    redrawElements(poppedElement)
 }
 
 /**
  * Recreate all HTML elements and relationship lines from the in-memory
  * model.  Used when navigating back up the view hierarchy.
  */
-function redrawElements() {
+function redrawElements(diagramModel) {
     // Rebuild elements
     diagramModel.elements.forEach((model, id) => {
         const coords = diagramModel.elementCoordinates.get(id)

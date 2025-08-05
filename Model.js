@@ -148,7 +148,8 @@ export class DiagramModel {
      * @param {{x:number, y:number}} coords
      */
     setElementCoordinates(elementId, coords) {
-        this.elementCoordinates.set(elementId, coords)
+        // this.elementCoordinates.set(elementId, coords)
+        this.currentElement.setElementCoordinates(elementId, coords)
     }
 
     /**
@@ -162,6 +163,7 @@ export class DiagramModel {
             this.navigationStack.splice(index, 1)
         }
         this.navigationStack.push(element)
+        this.currentElement = element
     }
 
     /**
@@ -170,7 +172,9 @@ export class DiagramModel {
      * @returns {DiagramElement|undefined}
      */
     popFromStack() {
-        return this.navigationStack.pop()
+        const poppedElement = this.navigationStack.pop()
+        this.currentElement = poppedElement
+        return poppedElement
     }
 
     /**
