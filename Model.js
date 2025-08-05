@@ -10,9 +10,21 @@ export class DiagramElement {
         this.displayName = displayName
         this.description = description
         this.name = name
-        this.elements = []
-        // this.rootElement = new DiagramElement('System Context', '', 'systemContext')
-        // this.currentElement = this.rootElement
+        this.elements = new Map()
+        this.elementCoordinates = new Map()
+    }
+
+    addElement(element) {
+        this.elements.set(element.displayName, element)
+    }
+
+    /**
+     * Save or update the coordinates for a diagram element.
+     * @param {string} elementId
+     * @param {{x:number, y:number}} coords
+     */
+    setElementCoordinates(elementId, coords) {
+        this.elementCoordinates.set(elementId, coords)
     }
 }
 
@@ -41,8 +53,17 @@ export class DiagramModel {
         this.elementCoordinates = new Map()
         // Stack used for navigation; most recently clicked elements are at the end
         this.navigationStack = []
+        this.rootElement = new DiagramElement('System Context', '', 'systemContext')
+        this.currentElement = this.rootElement
     }
 
+    /**
+     * Diagram elements which we can use to redraw the view.
+     * @returns {DiagramElement[]}
+     */
+    elementsInCurrentElement() {
+        return this.currentElement.elements
+    }
 
     /**
      * Adds an element ensuring unique display names.
@@ -62,6 +83,7 @@ export class DiagramModel {
             element.displayName = newDisplayName
             this.elements.set(newDisplayName, element)
             this[`${element.name}Count`] = updatedCount
+            this.currentElement.addElement(element)
 
             return element
         } else {
@@ -103,6 +125,8 @@ export class DiagramModel {
      * @returns {boolean} True if the rename succeeded, false otherwise.
      */
     renameElement(oldDisplayName, newDisplayName) {
+        // TODO Must recursively rename the root element as well as all the others
+
         // Reject if the desired name is already taken
         if (this.elements.has(newDisplayName)) {
             return false
@@ -117,6 +141,7 @@ export class DiagramModel {
         return true
     }
 
+    // Will become unnecessary once we uses only rootElement
     /**
      * Save or update the coordinates for a diagram element.
      * @param {string} elementId
