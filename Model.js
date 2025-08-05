@@ -125,8 +125,7 @@ export class DiagramModel {
 
         // Double write: store globally and within the involved elements
         this.relationships.set(relationshipId, newRelationship)
-        if (sourceElement) sourceElement.addRelationship(newRelationship)
-        if (targetElement) targetElement.addRelationship(newRelationship)
+        this.currentElement.addRelationship(newRelationship)
 
         return this.relationships
     }
