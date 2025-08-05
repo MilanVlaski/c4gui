@@ -119,7 +119,7 @@ canvas.appendChild(backButton)
  * Enable / disable the back button based on the navigation stack.
  */
 function updateBackButtonState() {
-    backButton.disabled = diagramModel.isStackEmpty()
+    backButton.disabled = diagramModel.isNavigationStackEmpty()
     backButton.style.opacity = backButton.disabled ? '0.5' : '1'
 }
 
@@ -332,7 +332,7 @@ function enableInlineEdit(labelEl, model) {
  * @returns Function that will rebuild the html page 
  */
 function zoomIntoModel(model) {
-    diagramModel.pushToStack(model)
+    diagramModel.pushToNavgationStack(model)
     clearCanvas()
     viewHeading.textContent = model.displayName
     updateBackButtonState()
@@ -344,11 +344,11 @@ function zoomIntoModel(model) {
 
 function zoomOutOfModel() {
     // Nothing to do if we are already at the root element
-    if (diagramModel.isStackEmpty()) {
+    if (diagramModel.isNavigationStackEmpty()) {
         return
     }
 
-    const poppedElement = diagramModel.popFromStack()
+    const poppedElement = diagramModel.popFromNavigationStack()
     const targetElement = diagramModel.currentElement   // new view to display
 
     clearCanvas()

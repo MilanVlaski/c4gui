@@ -138,8 +138,6 @@ export class DiagramModel {
      * @returns {boolean} True if the rename succeeded, false otherwise.
      */
     renameElement(oldDisplayName, newDisplayName) {
-        // TODO Must recursively rename the root element as well as all the others
-
         // Reject if the desired name is already taken
         if (this.elements.has(newDisplayName)) {
             return false
@@ -154,14 +152,12 @@ export class DiagramModel {
         return true
     }
 
-    // Will become unnecessary once we uses only rootElement
     /**
      * Save or update the coordinates for a diagram element.
      * @param {string} elementId
      * @param {{x:number, y:number}} coords
      */
     setElementCoordinates(elementId, coords) {
-        // this.elementCoordinates.set(elementId, coords)
         this.currentElement.setElementCoordinates(elementId, coords)
     }
 
@@ -170,7 +166,7 @@ export class DiagramModel {
      * is already present it is first removed so that it ends up on top.
      * @param {DiagramElement} element 
      */
-    pushToStack(element) {
+    pushToNavgationStack(element) {
         const index = this.navigationStack.indexOf(element)
         if (index !== -1) {
             this.navigationStack.splice(index, 1)
@@ -184,7 +180,7 @@ export class DiagramModel {
      * stack. Returns undefined if the stack is empty.
      * @returns {DiagramElement|undefined}
      */
-    popFromStack() {
+    popFromNavigationStack() {
         const poppedElement = this.navigationStack.pop()
         // After popping, point to the previous element in the stack
         this.currentElement =
@@ -198,7 +194,7 @@ export class DiagramModel {
      * Check whether the navigation stack is empty.
      * @returns {boolean}
      */
-    isStackEmpty() {
+    isNavigationStackEmpty() {
         return this.navigationStack.length === 0
     }
 
