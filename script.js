@@ -94,23 +94,12 @@ const toolbar = document.getElementById('toolbar')
 const viewHeading = document.getElementById('view-heading')
 
 // Move this crap to index.html and style.css
-const backButton = document.createElement('button')
-backButton.id = 'back-button'
-backButton.textContent = '←'
-backButton.disabled = true
-backButton.style.position = 'absolute'
-backButton.style.top = '10px'
-backButton.style.left = '10px'
-backButton.style.opacity = '0.5'
-backButton.classList.add('back-button')
-
-canvas.appendChild(backButton)
-// Move this crap to index.html and style.css
-
+const backButton = document.getElementById('back-button')
 /**
  * Enable / disable the back button based on the navigation stack.
  */
 function updateBackButtonState() {
+
     backButton.disabled = diagramModel.isNavigationStackEmpty()
     backButton.style.opacity = backButton.disabled ? '0.5' : '1'
 }

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C4 GUI</title>
 
+    <link rel="stylesheet" href="pico.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
 </head>
 <body>
     <header>
@@ -16,11 +16,13 @@
     </header>
 
     <main>
-        <aside id="toolbar">
+        <aside id="toolbar" style="display: flex; gap: 0.5em;">
             <button id="placeSoftwareSystem">Software System</button>
             <button id="placePerson">Person</button>
         </aside>
         <div id="canvas">
+            <!-- TODO replace with icon -->
+            <button id="back-button" disabled>←</button>
         </div>
     </main>
 

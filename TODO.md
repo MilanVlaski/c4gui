@@ -1,18 +1,19 @@
 ### To do
+- [ ] Make the relationship arrow simple, dotted, thinner, and straight
+- [ ] One click on a component leads to 2 buttons popping up -> "Edit" and "Zoom In". Double click still zooms in.
+	- [ ] Edit opens up a form that lets us rename
+	- [ ] Zoom In zooms in, same as the double click
+	- [ ] Consider adding "Pan" button, which will allow dragging the elements around
+	- [ ] The buttons should have icons
 - [ ] Create tree on the left, for pulling in reusable elements (from higher views).
 	- Make sure only elements that come from a higher layer can be placed onto the current diagram.
-- [ ] Put back button in index.html and style.css, not in script.js
-- [ ] On single click **on the diagram tree**, instead of displaying the input, display a form for renaming the properties of an element.
+- [x] Put back button in index.html and style.css, not in script.js
+- [ ] "Edit" form
+	- Use pico modal or something simple like that
 	- Form should have an OK and cancel
 	- Form should go away once we click away, like the input does. Can be done with blur event?
 - [ ] Add database button to container view
-- [ ] Have a fixed thing at the top which has a "Pan" button, to move the canvas around.
 - [ ] Hover over relationship arrow and enable adding text on top of it
-	- Tough. Maybe try from the sidebar instead.
-- [ ] Centered toolbar
-	- [ ] Arranging state (Draggable etc?).
-		- [ ] Mouse becomes drag.
-	- [ ] Panning state
 ### The composition issue
 - DiagramElements can contain other DiagramElements, the strictness of which is maintained by the GUI. The relationship can either be an INCLUDE or a CONTAIN, and it applies such that:
 	- INCLUDES means the element is included in the view of this element
