@@ -211,7 +211,7 @@ function createHtmlElementFromModel(clickEvent, model) {
             new LeaderLine(
                 canvasState.sourceElement,
                 element,
-                { path: 'straight', dash: true, size: 2 }
+                { path: 'straight', dash: true, size: 4, color: '#bbb'}
             )
         }
         cleanupConnectingPreview()
