@@ -1,4 +1,8 @@
 C4 modelling app that exports to Structurizr DSL
+## Try it out
+- `git clone` the project
+- double click on `index.html` to open it in your browser
+- done
 ### Index
 - [C4GUI Architecture Baseline](docs/C4GUI%20Architecture%20Baseline.md)
 - [To do](TODO.md)
