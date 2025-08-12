@@ -7,7 +7,7 @@ let canvasState = DEFAULT_STATE
 // CSS class applied to every diagram element so we can remove them
 // without touching other canvas children (e.g., UI overlays).
 const DIAGRAM_ELEMENT_CLASS = 'diagram-element'
-
+const arrowColor = '#bbb'
 
 /* ---------- Dom functions ---------- */
 
@@ -296,7 +296,7 @@ function createHtmlElementFromModel(clickEvent, model) {
         canvas.appendChild(tempAnchor)
 
         // Draw temporary dashed line from the source element to the pointer
-        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true }, path: 'straight', endPlug: 'behind' })
+        previewLine = new LeaderLine(element, tempAnchor, { dash: { animation: true }, color: arrowColor, path: 'straight', endPlug: 'behind' })
 
         repositionPreviewLine = moveEvent => {
             tempAnchor.style.left = moveEvent.clientX + 'px'
@@ -443,7 +443,7 @@ function redrawElements(diagramModel) {
             new LeaderLine(
                 src,
                 tgt,
-                { path: 'straight', dash: true, size: 2 }
+                { path: 'straight', dash: true, size: 4, color: arrowColor}
             )
         }
     })
