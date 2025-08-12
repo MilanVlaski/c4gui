@@ -26,6 +26,8 @@ function toCanvasCoords(evt, canvasEl) {
 }
 
 let actionOverlay = null
+// Global reference to the document-level handler that closes the action overlay
+let handleOutsideClick = null
 /**
  * Display inline action buttons ("Edit", "Zoom In") for the given element.
  * Any existing overlay is first removed so only one is visible at a time.
@@ -37,6 +39,7 @@ function showActionButtons(element, model) {
     if (actionOverlay) {
         actionOverlay.remove()
         actionOverlay = null
+        document.removeEventListener('pointerdown', handleOutsideClick, true)
     }
 
     actionOverlay = document.createElement('div')
@@ -46,6 +49,8 @@ function showActionButtons(element, model) {
     actionOverlay.style.left = '0'
     actionOverlay.style.display = 'flex'
     actionOverlay.style.gap = '0.25rem'
+    // Make the overlay focusable so we can detect blur / outside clicks
+    actionOverlay.tabIndex = -1
 
     // Edit button
     const editBtn = document.createElement('button')
@@ -61,10 +66,7 @@ function showActionButtons(element, model) {
                 alert(`An element named "${proposed.trim()}" already exists.`)
             }
         }
-        if (actionOverlay) {
-            actionOverlay.remove()
-            actionOverlay = null
-        }
+        close()
     })
 
     // Zoom In button
@@ -72,16 +74,33 @@ function showActionButtons(element, model) {
     zoomBtn.textContent = 'Zoom In'
     zoomBtn.addEventListener('click', ev => {
         ev.stopPropagation()
-        if (actionOverlay) {
-            actionOverlay.remove()
-            actionOverlay = null
-        }
+        close()
         zoomIntoModel(model)
     })
 
     actionOverlay.appendChild(editBtn)
     actionOverlay.appendChild(zoomBtn)
     element.appendChild(actionOverlay)
+
+    // Utility to close the overlay and detach the outside-click listener
+    const close = () => {
+        if (actionOverlay) {
+            actionOverlay.remove()
+            actionOverlay = null
+            document.removeEventListener('pointerdown', handleOutsideClick, true)
+        }
+    }
+
+    // Give the overlay focus so we can later detect loss of focus
+    actionOverlay.focus()
+
+    // Close the overlay when the user clicks anywhere outside of it
+    handleOutsideClick = (ev) => {
+        if (actionOverlay && !actionOverlay.contains(ev.target)) {
+            close()
+        }
+    }
+    document.addEventListener('pointerdown', handleOutsideClick, true)
 }
 
 /**
