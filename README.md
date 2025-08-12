@@ -1,8 +1,35 @@
 C4 modelling app that exports to Structurizr DSL
 ## Try it out
-- `git clone` the project
-- double click on `index.html` to open it in your browser
-- done
+
+Clone the repository and serve the files over a small local web server,
+then open the provided URL in your browser.
+
+### Option 1 – Python’s built-in server
+
+```bash
+# Python 3
+python3 -m http.server 8000
+# Python 2
+python -m SimpleHTTPServer 8000
+```
+
+Browse to: http://localhost:8000
+
+### Option 2 – Node.js http-server
+
+```bash
+npm install -g http-server
+http-server -p 8080
+```
+
+Browse to: http://localhost:8080
+
+### Option 3 – VS Code Live Server
+
+1. Install the “Live Server” extension in VS Code.  
+2. Right-click `index.html` → “Open with Live Server”.
+
+It will open automatically at http://localhost:5500
 ### Index
 - [C4GUI Architecture Baseline](docs/C4GUI%20Architecture%20Baseline.md)
 - [To do](TODO.md)
