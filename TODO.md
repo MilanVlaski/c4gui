@@ -1,7 +1,7 @@
 ### To do
 - [x] Make the relationship arrow simple, dotted, thinner, and straight
 - [ ] One click on a component leads to 2 buttons popping up -> "Edit" and "Zoom In". Double click still zooms in.
-    - [ ] Get rid of the contenteditable thing
+    - [x] Get rid of the contenteditable thing
 	- [ ] Edit opens up a form that lets us rename. Use an article, according to: https://picocss.com/docs/card
 	- [ ] Zoom In zooms in, same as the double click
 	- [ ] Consider adding "Pan" button, which will allow dragging the elements around

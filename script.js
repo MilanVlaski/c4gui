@@ -25,6 +25,65 @@ function toCanvasCoords(evt, canvasEl) {
     }
 }
 
+let actionOverlay = null
+/**
+ * Display inline action buttons ("Edit", "Zoom In") for the given element.
+ * Any existing overlay is first removed so only one is visible at a time.
+ * @param {HTMLElement} element
+ * @param {DiagramElement} model
+ */
+function showActionButtons(element, model) {
+    // Remove previous overlay if present
+    if (actionOverlay) {
+        actionOverlay.remove()
+        actionOverlay = null
+    }
+
+    actionOverlay = document.createElement('div')
+    actionOverlay.classList.add('element-actions')
+    actionOverlay.style.position = 'absolute'
+    actionOverlay.style.top = '-2.5rem'
+    actionOverlay.style.left = '0'
+    actionOverlay.style.display = 'flex'
+    actionOverlay.style.gap = '0.25rem'
+
+    // Edit button
+    const editBtn = document.createElement('button')
+    editBtn.textContent = 'Edit'
+    editBtn.addEventListener('click', ev => {
+        ev.stopPropagation()
+        const proposed = prompt('New name', model.displayName)
+        if (proposed && proposed.trim() && proposed.trim() !== model.displayName) {
+            if (diagramModel.renameElement(model.displayName, proposed.trim())) {
+                const label = element.querySelector('span')
+                if (label) label.textContent = proposed.trim()
+            } else {
+                alert(`An element named "${proposed.trim()}" already exists.`)
+            }
+        }
+        if (actionOverlay) {
+            actionOverlay.remove()
+            actionOverlay = null
+        }
+    })
+
+    // Zoom In button
+    const zoomBtn = document.createElement('button')
+    zoomBtn.textContent = 'Zoom In'
+    zoomBtn.addEventListener('click', ev => {
+        ev.stopPropagation()
+        if (actionOverlay) {
+            actionOverlay.remove()
+            actionOverlay = null
+        }
+        zoomIntoModel(model)
+    })
+
+    actionOverlay.appendChild(editBtn)
+    actionOverlay.appendChild(zoomBtn)
+    element.appendChild(actionOverlay)
+}
+
 /**
  * Remove every button from the sidebar toolbar.
  */
@@ -203,8 +262,6 @@ function createHtmlElementFromModel(clickEvent, model) {
 
     element.appendChild(nameSpan)
 
-    enableInlineEdit(nameSpan, model)
-
     const finishConnecting = (e) => {
         if (canvasState.sourceElement !== element
             && diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
@@ -251,6 +308,12 @@ function createHtmlElementFromModel(clickEvent, model) {
         document.addEventListener('pointermove', repositionPreviewLine)
     })
 
+
+    // Show inline action buttons on single click
+    element.addEventListener('click', (ev) => {
+        ev.stopPropagation()
+        showActionButtons(element, model)
+    })
 
     addDoublePressListener(element, () => {zoomIntoModel(model)})
 
