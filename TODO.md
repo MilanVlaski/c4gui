@@ -1,5 +1,5 @@
 ### To do
-- [ ] Make the relationship arrow simple, dotted, thinner, and straight
+- [x] Make the relationship arrow simple, dotted, thinner, and straight
 - [ ] One click on a component leads to 2 buttons popping up -> "Edit" and "Zoom In". Double click still zooms in.
 	- [ ] Edit opens up a form that lets us rename
 	- [ ] Zoom In zooms in, same as the double click

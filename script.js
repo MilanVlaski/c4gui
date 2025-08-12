@@ -208,7 +208,11 @@ function createHtmlElementFromModel(clickEvent, model) {
     const finishConnecting = (e) => {
         if (canvasState.sourceElement !== element
             && diagramModel.addRelationshipBetween(canvasState.sourceElement.id, element.id)) {
-            new LeaderLine(canvasState.sourceElement, element)
+            new LeaderLine(
+                canvasState.sourceElement,
+                element,
+                { path: 'straight', dash: true, size: 2 }
+            )
         }
         cleanupConnectingPreview()
         canvasState = DEFAULT_STATE
@@ -373,7 +377,11 @@ function redrawElements(diagramModel) {
         const src = document.getElementById(rel.sourceElement.displayName)
         const tgt = document.getElementById(rel.targetElement.displayName)
         if (src && tgt) {
-            new LeaderLine(src, tgt)
+            new LeaderLine(
+                src,
+                tgt,
+                { path: 'straight', dash: true, size: 2 }
+            )
         }
     })
 }
