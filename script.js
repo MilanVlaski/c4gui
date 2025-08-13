@@ -57,16 +57,8 @@ function showActionButtons(element, model) {
     editBtn.textContent = 'Edit'
     editBtn.addEventListener('click', ev => {
         ev.stopPropagation()
-        const proposed = prompt('New name', model.displayName)
-        if (proposed && proposed.trim() && proposed.trim() !== model.displayName) {
-            if (diagramModel.renameElement(model.displayName, proposed.trim())) {
-                const label = element.querySelector('span')
-                if (label) label.textContent = proposed.trim()
-            } else {
-                alert(`An element named "${proposed.trim()}" already exists.`)
-            }
-        }
         close()
+        openEditDialog(model, element)
     })
 
     // Zoom In button
@@ -101,6 +93,94 @@ function showActionButtons(element, model) {
         }
     }
     document.addEventListener('pointerdown', handleOutsideClick, true)
+}
+
+function openEditDialog(model, element) {
+    const dialog = document.createElement('dialog')
+    dialog.open = true
+    dialog.dataset.modal = ''
+    dialog.style.maxWidth = '420px'
+
+    const article = document.createElement('article')
+
+    const header = document.createElement('header')
+    const h3 = document.createElement('h3')
+    h3.textContent = 'Edit Element'
+    header.appendChild(h3)
+    article.appendChild(header)
+
+    const form = document.createElement('form')
+    form.method = 'dialog'
+    form.classList.add('grid')
+
+    const nameLabel = document.createElement('label')
+    nameLabel.textContent = 'Name'
+    const nameInput = document.createElement('input')
+    nameInput.type = 'text'
+    nameInput.required = true
+    nameInput.value = model.displayName
+    nameInput.name = 'name'
+    nameLabel.appendChild(nameInput)
+    form.appendChild(nameLabel)
+
+    const descLabel = document.createElement('label')
+    descLabel.textContent = 'Description'
+    const descInput = document.createElement('textarea')
+    descInput.rows = 3
+    descInput.name = 'description'
+    descInput.value = model.description || ''
+    descLabel.appendChild(descInput)
+    form.appendChild(descLabel)
+
+    const footer = document.createElement('footer')
+    const okBtn = document.createElement('button')
+    okBtn.textContent = 'OK'
+    okBtn.type = 'submit'
+    const cancelBtn = document.createElement('button')
+    cancelBtn.textContent = 'Cancel'
+    cancelBtn.type = 'button'
+    cancelBtn.classList.add('secondary')
+    footer.appendChild(okBtn)
+    footer.appendChild(cancelBtn)
+    form.appendChild(footer)
+
+    article.appendChild(form)
+    dialog.appendChild(article)
+    document.body.appendChild(dialog)
+
+    const closeDialog = () => {
+        dialog.close()
+        dialog.remove()
+    }
+
+    cancelBtn.addEventListener('click', closeDialog)
+    dialog.addEventListener('cancel', closeDialog)
+    dialog.addEventListener('click', ev => {
+        if (ev.target === dialog) closeDialog()
+    })
+
+    form.addEventListener('submit', ev => {
+        ev.preventDefault()
+        const newName = nameInput.value.trim()
+        const newDesc = descInput.value.trim()
+
+        if (newName && newName !== model.displayName) {
+            if (!diagramModel.renameElement(model.displayName, newName)) {
+                alert(`An element named "${newName}" already exists.`)
+                return
+            } else {
+                const label = element.querySelector('span')
+                if (label) label.textContent = newName
+                element.id = newName
+            }
+        }
+
+        model.description = newDesc
+        closeDialog()
+    })
+
+    nameInput.focus()
+    nameInput.select()
 }
 
 /**
