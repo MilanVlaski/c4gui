@@ -111,7 +111,6 @@ function openEditDialog(model, element) {
 
     const form = document.createElement('form')
     form.method = 'dialog'
-    form.classList.add('grid')
 
     const nameLabel = document.createElement('label')
     nameLabel.textContent = 'Name'
@@ -176,6 +175,7 @@ function openEditDialog(model, element) {
         }
 
         model.description = newDesc
+        element.title = newDesc
         closeDialog()
     })
 
@@ -360,6 +360,8 @@ function createHtmlElementFromModel(clickEvent, model) {
     nameSpan.style.userSelect = 'none'
 
     element.appendChild(nameSpan)
+    // Show element description as a tooltip
+    element.title = model.description || ''
 
     const finishConnecting = (e) => {
         if (canvasState.sourceElement !== element
