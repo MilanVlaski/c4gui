@@ -176,6 +176,8 @@ function openEditDialog(model, element) {
 
         model.description = newDesc
         element.title = newDesc
+        const descDiv = element.querySelector('.element-description')
+        if (descDiv) descDiv.textContent = newDesc
         closeDialog()
     })
 
@@ -360,6 +362,15 @@ function createHtmlElementFromModel(clickEvent, model) {
     nameSpan.style.userSelect = 'none'
 
     element.appendChild(nameSpan)
+
+    // Description underneath the element name
+    const descDiv = document.createElement('div')
+    descDiv.classList.add('element-description')
+    descDiv.style.fontSize = '0.8rem'
+    descDiv.style.marginTop = '0.2rem'
+    descDiv.textContent = model.description || ''
+    element.appendChild(descDiv)
+
     // Show element description as a tooltip
     element.title = model.description || ''
 
