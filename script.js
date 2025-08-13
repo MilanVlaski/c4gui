@@ -150,7 +150,7 @@ function setupSystemContextToolbar() {
     addToolbarButton('placeSoftwareSystem', 'Software System', () => {
         startPlacingDiagramElement(new DiagramElement('Software System', '', 'softwareSystem'))
     })
-    addToolbarButton('placePerson', 'Person', () => {
+    addToolbarButton('place-person', 'Person', () => {
         startPlacingDiagramElement(new DiagramElement('Person', '', 'person'))
     })
 }
@@ -166,8 +166,8 @@ let tempAnchor = null
 let repositionPreviewLine = null
 
 const canvas = document.getElementById('canvas')
-const softwareSystemBtn = document.getElementById('placeSoftwareSystem')
-const personBtn = document.getElementById('placePerson')
+const softwareSystemBtn = document.getElementById('place-software-system')
+const personBtn = document.getElementById('place-person')
 const toolbar = document.getElementById('toolbar')
 const viewHeading = document.getElementById('view-heading')
 
