@@ -3,7 +3,7 @@
 - [ ] One click on a component leads to 2 buttons popping up -> "Edit" and "Zoom In". Double click still zooms in.
     - [x] Get rid of the contenteditable thing
 	- [ ] Edit opens up a form that lets us rename. Use an article, according to: https://picocss.com/docs/card
-	- [ ] Zoom In zooms in, same as the double click
+	- [x] Zoom In zooms in, same as the double click
 	- [ ] Consider adding "Pan" button, which will allow dragging the elements around
 	- [ ] The buttons should have icons. Use FontAwesome.
 - [ ] Create tree on the left, for pulling in reusable elements (from higher views).

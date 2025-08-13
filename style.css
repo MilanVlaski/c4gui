@@ -82,5 +82,6 @@ body {
 
 .element-actions button {
     font-size: 0.8rem;
-    padding: 0.2rem 0.4rem;
+    --pico-form-element-spacing-horizontal: 0.5rem;
+    --pico-form-element-spacing-vertical: 0.3rem;
 }
