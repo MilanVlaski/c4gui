@@ -125,7 +125,7 @@ function openEditDialog(model, element) {
     const descLabel = document.createElement('label')
     descLabel.textContent = 'Description'
     const descInput = document.createElement('textarea')
-    descInput.rows = 3
+    descInput.rows = 2
     descInput.name = 'description'
     descInput.value = model.description || ''
     descLabel.appendChild(descInput)
@@ -139,8 +139,9 @@ function openEditDialog(model, element) {
     cancelBtn.textContent = 'Cancel'
     cancelBtn.type = 'button'
     cancelBtn.classList.add('secondary')
-    footer.appendChild(okBtn)
     footer.appendChild(cancelBtn)
+    footer.appendChild(okBtn)
+    footer.style = 'display: flex; gap: 1em;'
     form.appendChild(footer)
 
     article.appendChild(form)
