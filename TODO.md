@@ -1,10 +1,12 @@
 ### To do
+- [ ]
+- [ ] Consider adding "Pan" button, which will allow dragging the elements around
+  - [ ] Use the draggable shopify library. Be careful to go into a "dragging" CanvasState, otherwise, a line will be drawn.
 - [x] Make the relationship arrow simple, dotted, thinner, and straight
 - [ ] One click on a component leads to 2 buttons popping up -> "Edit" and "Zoom In". Double click still zooms in.
     - [x] Get rid of the contenteditable thing
 	- [ ] Edit opens up a form that lets us rename. Use an article, according to: https://picocss.com/docs/card
 	- [x] Zoom In zooms in, same as the double click
-	- [ ] Consider adding "Pan" button, which will allow dragging the elements around
 	- [ ] The buttons should have icons. Use FontAwesome.
 - [ ] Create tree on the left, for pulling in reusable elements (from higher views).
 	- Make sure only elements that come from a higher layer can be placed onto the current diagram.
@@ -33,9 +35,6 @@
 - [ ] Right click delete an element.
 #### GUI Improvements Graveyard
 - [ ] Copy styling of structurizr (use a ruler to find out proportions)
-- [ ] On hover attributes are important, because most people draw diagrams on a PC.
-- [ ] After watching CSS tutorial, make your own styling.
-- [ ] Make relationship straight, dotted, and thin.
 - [ ] Cursor changes when button to add an element is clicked
 - [ ] Connecting doesn't work on mobile. Events don't propagate correctly.
 	- [ ] Fix the mobile connecting problem by having the same handler for both mouse and touch.

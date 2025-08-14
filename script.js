@@ -441,51 +441,6 @@ document.addEventListener('pointerup', () => {
     canvasState.pointerup()
 })
 
-/**
- * Enable editing of diagram elements.
- * @param {*} labelEl 
- */
-function enableInlineEdit(labelEl, model) {
-
-    labelEl.addEventListener('click', function startEditing(e) {
-        e.stopPropagation()
-        const currentText = this.textContent
-        const input = document.createElement('input')
-        input.position = 'absolute'
-        input.value = currentText
-        input.style.minWidth = '50px'
-        this.replaceWith(input)
-        input.focus()
-
-        const finish = () => {
-            const proposedText = input.value.trim()
-            let finalText = model.displayName
-
-            if (proposedText && proposedText !== model.displayName) {
-                if (diagramModel.renameElement(model.displayName, proposedText)) {
-                    finalText = proposedText     // rename succeeded
-                } else {
-                    alert(`An element named "${proposedText}" already exists.`)
-                }
-            }
-
-            const span = document.createElement('span')
-            span.textContent = finalText
-            span.style.userSelect = 'none'
-            // Re-enable inline editing on the new span
-            enableInlineEdit(span, model)
-            input.replaceWith(span)
-        }
-
-        input.addEventListener('blur', finish)
-        input.addEventListener('keydown', ev => {
-            if (ev.key === 'Enter' || ev.key === 'Escape') {
-                input.blur()
-            }
-        })
-    })
-}
-
 
 /**
  * @param {DiagramElement} model Optional DiagramElement which was "zoomed" into
