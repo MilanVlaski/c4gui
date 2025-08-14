@@ -381,7 +381,9 @@ function createHtmlElementFromModel(clickEvent, model) {
             new LeaderLine(
                 canvasState.sourceElement,
                 element,
-                { path: 'straight', dash: true, size: 4, color: '#bbb'}
+                { path: 'straight', dash: true, size: 4, color: '#bbb',
+                    hoverStyle: {dropShadow: {color: 'blue', dx: 0, dy: 0}}
+                },
             )
         }
         cleanupConnectingPreview()
