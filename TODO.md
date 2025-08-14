@@ -1,22 +1,16 @@
 ### To do
-- [ ]
+- [ ] Refactor style.css
+- [ ] Edit relationships by interacting with the tree
+- [ ] Create tree on the left, for pulling in reusable elements (from higher views).
+  - [ ] Tree should have a debug mode, so that it displays the entirety of the model.
+  - To start, any element can be added to any layer of the diagram.
+  - [ ] Make sure only elements that come from a higher layer can be placed onto the current diagram.
+- [ ] Implement delete on each element
+  - [ ] Deleting an element that has a relationship deletes the relationship
+  - [ ] Relationships themselves get deleted by selecting them from the tree
 - [ ] Consider adding "Pan" button, which will allow dragging the elements around
   - [ ] Use the draggable shopify library. Be careful to go into a "dragging" CanvasState, otherwise, a line will be drawn.
-- [x] Make the relationship arrow simple, dotted, thinner, and straight
-- [ ] One click on a component leads to 2 buttons popping up -> "Edit" and "Zoom In". Double click still zooms in.
-    - [x] Get rid of the contenteditable thing
-	- [ ] Edit opens up a form that lets us rename. Use an article, according to: https://picocss.com/docs/card
-	- [x] Zoom In zooms in, same as the double click
-	- [ ] The buttons should have icons. Use FontAwesome.
-- [ ] Create tree on the left, for pulling in reusable elements (from higher views).
-	- Make sure only elements that come from a higher layer can be placed onto the current diagram.
-- [x] Put back button in index.html and style.css, not in script.js
-- [ ] "Edit" form
-	- Use pico modal or something simple like that
-	- Form should have an OK and cancel
-	- Form should go away once we click away, like the input does. Can be done with blur event?
 - [ ] Add database button to container view
-- [ ] Hover over relationship arrow and enable adding text on top of it
 ### The composition issue
 - DiagramElements can contain other DiagramElements, the strictness of which is maintained by the GUI. The relationship can either be an INCLUDE or a CONTAIN, and it applies such that:
 	- INCLUDES means the element is included in the view of this element
@@ -39,6 +33,8 @@
 - [ ] Connecting doesn't work on mobile. Events don't propagate correctly.
 	- [ ] Fix the mobile connecting problem by having the same handler for both mouse and touch.
 #### Solved
+- [x] Add blue shadow on hover, for elements.
+- [x] Do it for relationships by using https://anseki.github.io/leader-line/#hoverstyle ~~IMPOSSIBLE
 - [z] Prepare changes by making SystemContext a rootelement
 - [z] Add logic so that `redrawElements` takes DiagramElement as a parameter, and redraws only those elements
 	- [x] Must add elements to the proper DiagramElement. This can be done when adding, just call to `currentElement.addElement()`

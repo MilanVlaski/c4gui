@@ -27,8 +27,9 @@ body {
     border: 1px solid black;
 }
 
-.softwareSystem:hover, .container:hover, .person:hover {
+.softwareSystem:hover, .container:hover, .person:hover::before, .person:hover::after {
     cursor: pointer;
+    box-shadow: 1px 1px 5px 4px var(--pico-primary-focus);
 }
 
 .person {
