@@ -8,6 +8,7 @@ let canvasState = DEFAULT_STATE
 // without touching other canvas children (e.g., UI overlays).
 const DIAGRAM_ELEMENT_CLASS = 'diagram-element'
 const arrowColor = '#bbb'
+const PLACING_CURSOR = 'copy'
 
 /* ---------- Dom functions ---------- */
 
@@ -240,6 +241,7 @@ function setupSystemContextToolbar() {
 
 function startPlacingDiagramElement(diagramElement) {
     console.log(`Placing ${diagramElement.displayName}`)
+    canvas.style.cursor = PLACING_CURSOR
     canvasState = placingState(diagramElement)
 }
 
@@ -284,6 +286,7 @@ function placingState(model) {
             if (addedElement) {
                 const objectDiv = createHtmlElementFromModel(e, model)
                 canvas.appendChild(objectDiv)
+                canvas.style.cursor = 'auto'
                 canvasState = DEFAULT_STATE
             }
         },

@@ -1,5 +1,5 @@
 ### To do
-- [ ] While "carrying" an element, to add it, the cursor should change.
+- [x] While "carrying" an element, to add it, the cursor should change.
 - [ ] Refactor style.css
 - [ ] Edit relationships by interacting with the tree
 - [ ] Create tree on the left, for pulling in reusable elements (from higher views).
