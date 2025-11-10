@@ -10,7 +10,7 @@ However, the issue with diagramming apps is that they often use a proprietary te
 2. Enter the c4gui directory: `cd c4gui`
 3. Open `index.html` in your browser.
 
-The above may not work on Linux due to CORS. Instead, you have the follwing options:
+The above may not work on Linux due to CORS. Instead, you have the following options:
 
 ### Option 1 – VS Code Live Server
 
